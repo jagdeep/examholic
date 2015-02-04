@@ -5,7 +5,7 @@ class Exam < ActiveRecord::Base
   has_many :papers
   belongs_to :account
 
-  valiadtes :name, :presence => true
+  validates :name, :presence => true
   validates :account_id, :presence => true
   validates :duration, :presence => true
   validates :start_time, :presence => true
