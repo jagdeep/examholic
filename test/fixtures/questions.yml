@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 1
+  topic_id: 1
+  title: MyText
+  option1: MyString
+  option2: MyString
+  option3: MyString
+  option4: MyString
+  option5: MyString
+  answer: MyString
+  marks: 1.5
+  negative_marks: 1.5
+
+two:
+  account_id: 1
+  topic_id: 1
+  title: MyText
+  option1: MyString
+  option2: MyString
+  option3: MyString
+  option4: MyString
+  option5: MyString
+  answer: MyString
+  marks: 1.5
+  negative_marks: 1.5

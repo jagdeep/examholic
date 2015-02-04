@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 1
+  student_id: 1
+  paper_session_id: 1
+  question_id: 1
+  answer: MyString
+  correct: false
+
+two:
+  account_id: 1
+  student_id: 1
+  paper_session_id: 1
+  question_id: 1
+  answer: MyString
+  correct: false
