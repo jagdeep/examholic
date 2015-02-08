@@ -1,7 +1,4 @@
-%h1 Editing exam
-
-= render 'form'
-
-= link_to 'Show', @exam
-\|
-= link_to 'Back', exams_path
+- model_class = Exam
+.page-header
+  %h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
+= render :partial => "form"
