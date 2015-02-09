@@ -1,33 +1,11 @@
-= form_for @exam, html: { class: "form form-horizontal exam" } do |f|
-  .form-group
-    = f.label :account_id, class: 'control-label'
-    .controls
-      = f.text_field :account_id, class: 'form-control', required: true
-    = error_span(@exam[:account_id])
-  .form-group
-    = f.label :name, class: 'control-label'
-    .controls
-      = f.text_field :name, class: 'form-control', required: true
-    = error_span(@exam[:name])
-  .form-group
-    = f.label :status, class: 'control-label'
-    .controls
-      = f.text_field :status, class: 'form-control', required: true
-    = error_span(@exam[:status])
-  .form-group
-    = f.label :duration, class: 'control-label'
-    .controls
-      = f.text_field :duration, class: 'form-control', required: true
-    = error_span(@exam[:duration])
-  .form-group
-    = f.label :start_time, class: 'control-label'
-    .controls
-      = f.text_field :start_time, class: 'form-control', required: true
-    = error_span(@exam[:start_time])
-  .form-group
-    = f.label :end_time, class: 'control-label'
-    .controls
-      = f.text_field :end_time, class: 'form-control', required: true
-    = error_span(@exam[:end_time])
-  = f.submit nil,class: 'btn btn-primary'
+= simple_form_for @exam, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name
+  = error_span(@exam[:name])
+  = f.input :duration
+  = error_span(@exam[:duration])
+  = f.input :start_time
+  = error_span(@exam[:start_time])
+  = f.input :end_time
+  = error_span(@exam[:end_time])
+  = f.button :submit, :class => 'btn-primary'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), exams_path, :class => 'btn btn-default'
