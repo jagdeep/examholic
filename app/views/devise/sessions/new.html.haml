@@ -1,6 +1,6 @@
 .col-md-4.col-md-offset-4
   .panel.panel-default
-    .panel-heading Log in
+    .panel-heading #{resource_name.to_s.humanize} - Log in
     .panel-body.row
       .col-md-10.col-md-offset-1
         = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, class: 'form-horizontal' }) do |f|

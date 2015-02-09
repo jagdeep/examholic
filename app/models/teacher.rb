@@ -6,8 +6,9 @@ class Teacher < ActiveRecord::Base
   has_and_belongs_to_many :streams
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :accounts
+  has_many :batches, :through => :accounts
+  has_many :owned_accounts, :class_name => "Account", :foreign_key => :owner_id
 
   validates :name, :presence => true
   validates :phone, :presence => true
-  validates :qualification, :presence => true
 end

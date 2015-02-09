@@ -1,0 +1,24 @@
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Account
+      %th Students
+      %th
+      
+  %tbody
+    - @batches.each do |batch|
+      %tr
+        %td= batch.name
+        %td= batch.account.name
+        %td= batch.students.count
+        %td
+          = link_to 'Students', batch_subscriptions_path(batch)
+          |
+          = link_to 'Edit', edit_batch_path(batch)
+          |
+          = link_to 'Destroy', batch, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Batch', new_batch_path

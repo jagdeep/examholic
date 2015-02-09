@@ -3,8 +3,16 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
+  before_action :auth_user!
 
   private
+
+  def auth_user!
+    if !student_signed_in? and !teacher_signed_in? and controller_name != "sessions" and controller_name != "registrations" and controller_name != "passwords"
+      # render :text => controller_name and return
+      redirect_to new_student_session_path
+    end
+  end
 
   def configure_devise_permitted_parameters
     registration_params = [:name, :phone, :address, :email, :password, :password_confirmation]

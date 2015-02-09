@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-  get 'dashboard/index'
+  resources :subscriptions
 
+  get 'dashboard/index'
+  get 'dashboard/home'
+
+  resources :accounts
+  resources :batches do
+    resources :subscriptions
+  end
   resources :exams
 
   devise_for :teachers
   devise_for :students
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -5,6 +5,7 @@ class Student < ActiveRecord::Base
 
   has_many :subscriptions
   has_many :batches, :through => :subscriptions
+  has_many :accounts, :through => :subscriptions
   has_many :answers
   has_many :paper_sessions
   has_many :papers, :through => :paper_sessions
