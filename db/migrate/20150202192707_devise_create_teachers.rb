@@ -30,9 +30,9 @@ class DeviseCreateTeachers < ActiveRecord::Migration
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string  :name, :limit => 255
-      t.integer :phone, :limit => 11
-      t.string  :qualifications, :limit => 255
+      t.string  :name
+      t.string  :phone
+      t.string  :qualifications
 
       t.timestamps
     end
