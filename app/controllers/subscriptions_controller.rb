@@ -26,6 +26,9 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
+    @student = Student.new(subscription_params[:student])
+    @student.valid?
+    @subscription.student = @student
 
     respond_to do |format|
       if @subscription.save
@@ -74,6 +77,6 @@ class SubscriptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_params
-      params[:subscription]
+      params.require(:subscription).permit(:student)
     end
 end

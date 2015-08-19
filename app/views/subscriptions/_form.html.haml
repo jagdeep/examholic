@@ -1,7 +1,13 @@
-= simple_form_for(@subscription) do |f|
+= simple_form_for([@batch, @subscription]) do |f|
   = f.error_notification
+  = @subscription.errors.full_messages
 
   .form-inputs
+    = f.fields_for :students do |s|
+      = s.input :name
+      = s.input :email
+      = s.input :phone
+      = s.input :address
 
   .form-actions
     = f.button :submit
