@@ -25,38 +25,65 @@
           %span.icon-bar
           %span.icon-bar
         %a.navbar-brand(href="#")
-          %span.glyphicon.glyphicon-search
+          %i.fa.fa-graduation-cap
           Examholic
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.pull-right
             - if teacher_signed_in?
-              %li{:class => ('active' if controller_name == 'dashboard')}= link_to "Dashboard", "/"
+              %li{:class => ('active' if controller_name == 'dashboard')}
+                = link_to "/" do
+                  %i.fa.fa-dashboard
+                  Dashboard
               %li{:class => ('active' if controller_name == 'exams')}= link_to "Exams", "/exams"
               %li{:class => ('active' if controller_name == 'papers')}= link_to "Papers", "/papers"
-              %li{:class => ('active' if controller_name == 'reports')}= link_to "Reports", "/reports"
-              %li{:class => ('active' if controller_name == 'batches' or controller_name == 'subscriptions')}= link_to "Batches", "/batches"
+              %li{:class => ('active' if controller_name == 'reports')}
+                = link_to "/reports" do
+                  %i.fa.fa-area-chart
+                  Reports
+              %li{:class => ('active' if controller_name == 'batches' or controller_name == 'subscriptions')}
+                = link_to "/batches" do
+                  %i.fa.fa-users
+                  Batches
               %li{:class => ('active' if controller_name == 'accounts')}= link_to "Accounts", "/accounts"
               %li.dropdown
                 = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
                   = current_teacher.name
                   %span.caret
                 %ul.dropdown-menu{:role => "menu"}
-                  %li= link_to "Edit Profile", edit_teacher_registration_path
-                  %li= link_to "Logout", destroy_teacher_session_path, :method => :delete
+                  %li
+                    = link_to edit_teacher_registration_path do
+                      %i.fa.fa-user
+                      Edit Profile
+                  %li
+                    = link_to destroy_teacher_session_path, :method => :delete do
+                      %i.fa.fa-power-off
+                      Logout
             - elsif student_signed_in?
               %li{:class => ('active' if controller_name == 'dashboard')}= link_to "Dashboard", "/"
               %li{:class => ('active' if controller_name == 'exams')}= link_to "Exams", "/exams"
               %li{:class => ('active' if controller_name == 'papers')}= link_to "Papers", "/papers"
-              %li{:class => ('active' if controller_name == 'reports')}= link_to "Reports", "/reports"
+              %li{:class => ('active' if controller_name == 'reports')}
+                = link_to "/reports" do
+                  %i.fa.fa-area-chart
+                  Reports
               %li.dropdown
                 = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
                   = current_student.name
                   %span.caret
                 %ul.dropdown-menu{:role => "menu"}
-                  %li= link_to "Settings", "/path2"
+                  %li
+                    = link_to "/" do
+                      %i.fa.fa-gears
+                      Settings
                   %li.divider
-                  %li= link_to "Edit Profile", edit_student_registration_path
-                  %li= link_to "Logout", destroy_student_session_path, :method => :delete
+                  %li
+                    = link_to edit_student_registration_path do
+                      %i.fa.fa-user
+                      Edit Profile
+                  %li
+                    = link_to destroy_student_session_path, :method => :delete do
+                      %i.fa.fa-power-off
+                      Logout
             - else
               %li.dropdown
                 = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
@@ -78,5 +105,7 @@
       .row
         = bootstrap_flash
         = yield
+      %br
+      %br
       %footer
         %p &copy; ExamHolic 2015

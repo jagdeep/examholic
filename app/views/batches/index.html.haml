@@ -1,28 +1,39 @@
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Account
-      %th Exams
-      %th Papers
-      %th Students
-      %th
-      
-  %tbody
-    - @batches.each do |batch|
-      %tr
-        %td= batch.name
-        %td= batch.account.name
-        %td= batch.exams.count
-        %td= batch.papers.count
-        %td= batch.students.count
-        %td
-          = link_to 'Students', batch_subscriptions_path(batch)
-          |
-          = link_to 'Edit', edit_batch_path(batch)
-          |
-          = link_to 'Destroy', batch, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Batch', new_batch_path
+%div
+  %h6.text-uppercase.pull-left Student Batches
+  %p.pull-right
+    = link_to new_batch_path, class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Batch
+  .clearfix
+- @batches.in_groups_of(2, false) do |batch_group|
+  .row
+    - batch_group.each do |batch|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= batch.name
+            .pull-right
+              = link_to edit_batch_path(batch) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to batch, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Account
+              .pull-right= batch.name
+              .clearfix
+            %li.list-group-item
+              .pull-left Exams
+              .pull-right= batch.exams.count
+              .clearfix
+            %li.list-group-item
+              .pull-left Papers
+              .pull-right= batch.papers.count
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Students', batch_subscriptions_path(batch)
+              .pull-right= link_to batch.students.count, batch_subscriptions_path(batch)
+              .clearfix
+.clearfix
