@@ -1,0 +1,30 @@
+%div
+  %h6.text-uppercase.pull-left= @batch.name
+  %p.pull-right
+    = link_to new_batch_student_path(@batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      Add
+    = link_to new_batch_student_path(@batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-upload
+      Import
+    = link_to new_batch_student_path(@batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-download
+      Export
+  .clearfix
+%table.table
+  %thead
+    %tr
+      %th Phone
+      %th Name
+      %th Email
+      %th Actions
+
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= '******'+student.phone[-4..-1].to_s
+        %td= student.name
+        %td= student.email
+        %td= link_to 'Remove', batch_student_path(@batch, student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
+
+%br

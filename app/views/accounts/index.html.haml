@@ -1,24 +1,36 @@
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Email
-      %th Phone
-      %th Created At
-      %th Actions
-      
-  %tbody
-    - @accounts.each do |account|
-      %tr
-        %td= account.name
-        %td= account.email
-        %td= account.phone
-        %td= account.created_at
-        %td
-          = link_to 'Edit', edit_account_path(account)
-          |
-          = link_to 'Destroy', account, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%div
+  %h6.text-uppercase.pull-left Accounts
+  %p.pull-right
+    = link_to new_account_path, class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Account
+  .clearfix
+- @accounts.in_groups_of(2, false) do |account_group|
+  .row
+    - account_group.each do |account|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= account.name
+            .pull-right
+              = link_to edit_account_path(account) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Email
+              .pull-right= account.email
+              .clearfix
+            %li.list-group-item
+              .pull-left Phone
+              .pull-right= account.phone
+              .clearfix
+            %li.list-group-item
+              .pull-left Created at
+              .pull-right= account.created_at
+              .clearfix
 
-%br
-
-= link_to 'New Account', new_account_path
+.clearfix

@@ -6,4 +6,7 @@ class Subscription < ActiveRecord::Base
   validates :account_id, :presence => true
   validates :student_id, :presence => true
   validates :batch_id, :presence => true
+
+  accepts_nested_attributes_for :student
+  validates_associated :student
 end

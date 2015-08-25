@@ -10,5 +10,5 @@ class Teacher < ActiveRecord::Base
   has_many :owned_accounts, :class_name => "Account", :foreign_key => :owner_id
 
   validates :name, :presence => true
-  validates :phone, :presence => true
+  validates :phone, :presence => true, :numericality => true
 end

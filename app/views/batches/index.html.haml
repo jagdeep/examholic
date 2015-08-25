@@ -22,7 +22,7 @@
           %ul.list-group
             %li.list-group-item
               .pull-left Account
-              .pull-right= batch.name
+              .pull-right= batch.account.name
               .clearfix
             %li.list-group-item
               .pull-left Exams
@@ -33,7 +33,7 @@
               .pull-right= batch.papers.count
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Students', batch_subscriptions_path(batch)
-              .pull-right= link_to batch.students.count, batch_subscriptions_path(batch)
+              .pull-left= link_to 'Students', batch_students_path(batch)
+              .pull-right= link_to batch.students.count, batch_students_path(batch)
               .clearfix
 .clearfix

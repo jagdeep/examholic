@@ -16,6 +16,6 @@ class Account < ActiveRecord::Base
   validates :owner_id, :presence => true
   validates :name, :presence => true
   validates :email, :presence => true
-  validates :phone, :presence => true
+  validates :phone, :presence => true, :numericality => true
   validates :address, :presence => true
 end

@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
-  resources :subscriptions
-
   get 'dashboard/index'
-  get 'dashboard/home'
 
   resources :accounts
   resources :batches do
-    resources :subscriptions
+    resources :students
   end
-  resources :exams
+  resources :exams do
+    resources :papers do
+      resources :questions
+    end
+  end
 
   devise_for :teachers
   devise_for :students

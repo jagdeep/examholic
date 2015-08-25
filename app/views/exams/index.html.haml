@@ -1,13 +1,39 @@
-- (current_student || current_teacher).batches.each do |batch|
-  .col-md-4
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title= batch.name
-        %span= batch.account.name
-      .panel-body
-        .list-group
-          - @exams.each do |exam|
-            %a.list-group-item{:href => "#"}
-              %h5.list-group-item-heading= exam.name
-              %p.list-group-item-text= exam.start_time
-
+%div
+  %h6.text-uppercase.pull-left Exams
+  %p.pull-right
+    = link_to new_exam_path, class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Exam
+  .clearfix
+- @exams.in_groups_of(2, false) do |exam_group|
+  .row
+    - exam_group.each do |exam|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= exam.name
+            .pull-right
+              = link_to edit_exam_path(exam) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to exam, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Start at
+              .pull-right= exam.start_time
+              .clearfix
+            %li.list-group-item
+              .pull-left Finish at
+              .pull-right= exam.end_time
+              .clearfix
+            %li.list-group-item
+              .pull-left Account
+              .pull-right= exam.account.name
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Papers', exam_papers_path(exam)
+              .pull-right= link_to exam.papers.count
+              .clearfix
+.clearfix
