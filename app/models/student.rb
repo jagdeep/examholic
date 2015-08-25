@@ -12,6 +12,7 @@ class Student < ActiveRecord::Base
   has_many :exam_sessions
   has_many :exams, :through => :exam_sessions
 
+  validates :name,  :presence => true
   validates :email, :presence => true, :uniqueness => true
   validates :phone, :presence => true, :numericality => true, :uniqueness => true
 end
