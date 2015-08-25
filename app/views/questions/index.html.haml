@@ -29,6 +29,8 @@
         %td= question.topic
         %td= question.marks
         %td= question.negative_marks
-        %td= link_to 'Remove', exam_paper_question_path(@paper.exam_id, @paper, question), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
+        %td
+          = link_to 'Edit', edit_exam_paper_question_path(@paper.exam_id, @paper, question), class: "btn btn-default btn-xs"
+          = link_to 'Remove', exam_paper_question_path(@paper.exam_id, @paper, question), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
 
 %br
