@@ -7,7 +7,7 @@
           = f.error_notification
 
           .form-inputs
-            = f.input :title
+            = f.input :title, label: 'Question'
             = f.input :topic_id, as: :select, collection: Topic.all
             = f.input :answer
             = f.input :marks

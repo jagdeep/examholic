@@ -8,7 +8,7 @@
 
           .form-inputs
             = f.input :name
-            = f.input :status, as: :select, collection: [:active, :inactive], default: :active
+            = f.input :status, as: :select, collection: [:draft, :publish], default: :draft
             = f.input :duration
             = f.input :marks_per_question
             = f.input :negative_marks_per_question
