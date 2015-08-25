@@ -5,7 +5,19 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   before_action :auth_user!
 
+  helper_method :current_account
+  before_action :set_current_account
+
   private
+
+  def current_account
+    @current_account
+  end
+
+  def set_current_account
+    session[:current_account_id] = params[:account_id] if params[:account_id].present?
+    @current_account = Account.find(session[:current_account_id]) if session[:current_account_id].present?
+  end
 
   def auth_user!
     if !student_signed_in? and !teacher_signed_in? and controller_name != "sessions" and controller_name != "registrations" and controller_name != "passwords"

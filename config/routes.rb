@@ -3,13 +3,17 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   get 'dashboard/index'
 
-  resources :accounts
-  resources :batches do
-    resources :students
-  end
-  resources :exams do
-    resources :papers do
-      resources :questions
+  resources :accounts do
+    member do
+      put :set_current
+    end
+    resources :batches do
+      resources :students
+    end
+    resources :exams do
+      resources :papers do
+        resources :questions
+      end
     end
   end
 

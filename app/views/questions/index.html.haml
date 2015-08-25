@@ -1,13 +1,13 @@
 %div
   %h6.text-uppercase.pull-left= @paper.name
   %p.pull-right
-    = link_to new_exam_paper_question_path(@paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+    = link_to new_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
       %i.fa.fa-plus
       Add
-    = link_to new_exam_paper_question_path(@paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+    = link_to new_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
       %i.fa.fa-upload
       Import
-    = link_to new_exam_paper_question_path(@paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+    = link_to new_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
       %i.fa.fa-download
       Export
   .clearfix
@@ -23,10 +23,7 @@
       %tr
         %td= question.title
         %td= question.topic
-        %td= question.marks
-        %td= question.negative_marks
         %td
-          = link_to 'Edit', edit_exam_paper_question_path(@paper.exam_id, @paper, question), class: "btn btn-default btn-xs"
-          = link_to 'Remove', exam_paper_question_path(@paper.exam_id, @paper, question), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
-
+          = link_to 'Edit', edit_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper, question), class: "btn btn-default btn-xs"
+          = link_to 'Remove', account_exam_paper_question_path(@current_account, @paper.exam_id, @paper, question), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
 %br

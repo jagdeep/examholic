@@ -1,6 +1,11 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
+  def set_current
+    session[:current_account_id] = params[:id]
+    redirect_to :back
+  end
+
   # GET /accounts
   # GET /accounts.json
   def index

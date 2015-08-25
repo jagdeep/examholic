@@ -6,39 +6,40 @@
       %span.icon-bar
     %a.navbar-brand(href="#")
       %i.fa.fa-graduation-cap
-      Examholic
+      - if @current_account
+        = @current_account.name
+      - else
+        Examholic
     .navbar-collapse.collapse.navbar-responsive-collapse
       %ul.nav.navbar-nav.pull-right
         - if teacher_signed_in?
           %li{:class => ('active' if controller_name == 'dashboard')}
-            = link_to "/" do
+            = link_to root_path do
               %i.fa.fa-home
               Dashboard
-          %li{:class => ('active' if controller_name == 'exams')}
-            = link_to "/exams" do
-              %i.fa.fa-bars
-              Exams
-          %li{:class => ('active' if controller_name == 'reports')}
-            = link_to "/reports" do
-              %i.fa.fa-check-square
-              Reports
-          %li{:class => ('active' if controller_name == 'batches' or controller_name == 'students')}
-            = link_to "/batches" do
-              %i.fa.fa-users
-              Batches
-          %li{:class => ('active' if controller_name == 'accounts')}
-            = link_to "/accounts" do
-              %i.fa.fa-briefcase
-              Accounts
+          - if @current_account
+            %li{:class => ('active' if controller_name == 'exams')}
+              = link_to account_exams_path(@current_account) do
+                %i.fa.fa-bars
+                Exams
+            %li{:class => ('active' if controller_name == 'reports')}
+              = link_to "/reports" do
+                %i.fa.fa-check-square
+                Reports
+            %li{:class => ('active' if controller_name == 'batches' or controller_name == 'students')}
+              = link_to account_batches_path(@current_account) do
+                %i.fa.fa-users
+                Batches
           %li.dropdown
             = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
               = current_teacher.name
               %span.caret
             %ul.dropdown-menu{:role => "menu"}
-              %li
-                = link_to "/" do
-                  %i.fa.fa-gears
-                  Settings
+              - current_teacher.owned_accounts.each do |account|
+                %li
+                  = link_to set_current_account_path(account.id), method: :put do
+                    %i.fa{class: (@current_account.try(:id) == account.id ? 'fa-circle' : 'fa-circle-o')}
+                    = account.name
               %li.divider
               %li
                 = link_to edit_teacher_registration_path do

@@ -1,7 +1,7 @@
 %div
   %h6.text-uppercase.pull-left Exams
   %p.pull-right
-    = link_to new_exam_path, class: "btn btn-default btn-sm" do
+    = link_to new_account_exam_path(@current_account), class: "btn btn-default btn-sm" do
       %i.fa.fa-plus
       New Exam
   .clearfix
@@ -13,10 +13,10 @@
           .panel-heading
             .pull-left= exam.name
             .pull-right
-              = link_to edit_exam_path(exam) do
+              = link_to edit_account_exam_path(@current_account, exam) do
                 %i.fa.fa-edit
               &nbsp;
-              = link_to exam, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+              = link_to account_exam_path(@current_account, exam), :method => :delete, :data => { :confirm => 'Are you sure?' } do
                 %i.fa.fa-trash-o
             .clearfix
           %ul.list-group
@@ -37,7 +37,7 @@
               .pull-right= exam.account.name
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Papers', exam_papers_path(exam)
-              .pull-right= link_to exam.papers.count
+              .pull-left= link_to 'Papers', account_exam_papers_path(@current_account, exam)
+              .pull-right= link_to exam.papers.count, account_exam_papers_path(@current_account, exam)
               .clearfix
 .clearfix
