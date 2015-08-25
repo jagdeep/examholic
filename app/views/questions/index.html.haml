@@ -15,17 +15,13 @@
   %thead
     %tr
       %th Question
-      %th Answer
       %th Topic
-      %th Marks
-      %th Negative marks
       %th Actions
 
   %tbody
     - @questions.each do |question|
       %tr
         %td= question.title
-        %td= question.answer
         %td= question.topic
         %td= question.marks
         %td= question.negative_marks

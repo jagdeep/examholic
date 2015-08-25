@@ -8,6 +8,7 @@
           = f.input :duration
           = f.input :start_time, :as => :string
           = f.input :end_time, :as => :string
+          = f.input :batch_id, :as => :select, :collection => Batch.all
           = f.input :account_id, :as => :select, :collection => Account.all
           = f.button :submit, :class => 'btn-primary'
           = link_to 'Cancel', exams_path, :class => 'btn btn-default'

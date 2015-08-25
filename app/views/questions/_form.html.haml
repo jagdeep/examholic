@@ -3,15 +3,29 @@
     .panel-heading #{action_name.humanize} Question
     .panel-body.row
       .col-md-10.col-md-offset-1
-        = simple_form_for [@exam, @paper, @question], :url => exam_paper_questions_path(@paper.exam_id, @paper, @question) do |f|
+        = simple_form_for [@exam, @paper, @question] do |f|
           = f.error_notification
 
           .form-inputs
             = f.input :title, label: 'Question'
             = f.input :topic_id, as: :select, collection: Topic.all
-            = f.input :answer
-            = f.input :marks
-            = f.input :negative_marks
 
+            %br
+            %p.input-group
+              = f.text_field :option1, :class => "string form-control", :placeholder => "Option 1"
+              %span.input-group-addon= check_box :answers, :option1, {checked: (@question.answer || []).include?('option1')}
+            %p.input-group
+              = f.text_field :option2, :class => "string form-control", :placeholder => "Option 2"
+              %span.input-group-addon= check_box :answers, :option2, {checked: (@question.answer || []).include?('option2')}
+            %p.input-group
+              = f.text_field :option3, :class => "string form-control", :placeholder => "Option 3"
+              %span.input-group-addon= check_box :answers, :option3, {checked: (@question.answer || []).include?('option3')}
+            %p.input-group
+              = f.text_field :option4, :class => "string form-control", :placeholder => "Option 4"
+              %span.input-group-addon= check_box :answers, :option4, {checked: (@question.answer || []).include?('option4')}
+            %p.input-group
+              = f.text_field :option5, :class => "string form-control", :placeholder => "Option 5"
+              %span.input-group-addon= check_box :answers, :option5, {checked: (@question.answer || []).include?('option5')}
+          %br
           .form-actions
-            = f.button :submit
+            = f.button :submit, :class => "btn-primary"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825113033) do
+ActiveRecord::Schema.define(version: 20150825202509) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -117,7 +117,10 @@ ActiveRecord::Schema.define(version: 20150825113033) do
     t.datetime "end_time"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "batch_id",   limit: 4
   end
+
+  add_index "exams", ["batch_id"], name: "index_exams_on_batch_id", using: :btree
 
   create_table "exams_segments", id: false, force: :cascade do |t|
     t.integer "exam_id",    limit: 4

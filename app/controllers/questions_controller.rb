@@ -39,8 +39,8 @@ class QuestionsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @question.update(batch_params)
-        format.html { redirect_to @question, notice: 'Paper was successfully updated.' }
+      if @question.update(question_params)
+        format.html { redirect_to exam_paper_questions_path(@paper.exam_id, @paper), notice: 'Paper was successfully updated.' }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -59,7 +59,8 @@ class QuestionsController < ApplicationController
 
   private
     def find_paper
-      @paper = Paper.find(params[:paper_id])
+      @exam = Exam.find(params[:exam_id])
+      @paper = @exam.papers.where(:id => params[:paper_id]).first
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +70,8 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:title,:topic_id,:answer,:marks,:negative_marks)
+      hsh = params.require(:question).permit(:title,:topic_id,:marks,:negative_marks,:option1,:option2,:option3,:option4,:option5,:answers)
+      hsh[:answer] = params[:answers].select{|k,v| v == '1' }.keys if params[:answers].present?
+      return hsh
     end
 end
