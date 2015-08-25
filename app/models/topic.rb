@@ -5,4 +5,8 @@ class Topic < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :subject_id, :presence => true
+
+  def to_s
+    name
+  end
 end
