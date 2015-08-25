@@ -40,6 +40,7 @@ gem 'devise'
 gem 'html2haml'
 gem 'simple_form'
 gem 'country_select'
+gem 'activeadmin', '~> 1.0.0.pre1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
