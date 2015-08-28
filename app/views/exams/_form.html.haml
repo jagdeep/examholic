@@ -3,12 +3,11 @@
     .panel-heading #{action_name.humanize} Exam
     .panel-body.row
       .col-md-10.col-md-offset-1
-        = simple_form_for @exam do |f|
+        = simple_form_for [@current_account, @exam] do |f|
           = f.input :name
           = f.input :duration
           = f.input :start_time, :as => :string
           = f.input :end_time, :as => :string
-          = f.input :batch_id, :as => :select, :collection => Batch.all
-          = f.input :account_id, :as => :select, :collection => Account.all
+          = f.input :batch_id, :as => :select, :collection => @current_account.batches.all
           = f.button :submit, :class => 'btn-primary'
-          = link_to 'Cancel', exams_path, :class => 'btn btn-default'
+          = link_to 'Cancel', account_exams_path(@current_account), :class => 'btn btn-default'

@@ -3,12 +3,12 @@
     .panel-heading #{action_name.humanize} Batch
     .panel-body.row
       .col-md-10.col-md-offset-1
-        = simple_form_for(@batch) do |f|
+        = simple_form_for [@current_account, @batch] do |f|
           = f.error_notification
 
           .form-inputs
             = f.input :name
-            = f.input :account_id, collection: current_teacher.owned_accounts
 
           .form-actions
-            = f.button :submit
+            = f.button :submit, :class => "btn btn-primary"
+            = link_to "Cancel", account_batches_path(@current_account), :class => "btn btn-default"

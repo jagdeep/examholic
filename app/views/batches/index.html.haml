@@ -1,7 +1,7 @@
 %div
   %h6.text-uppercase.pull-left Student Batches
   %p.pull-right
-    = link_to new_batch_path, class: "btn btn-default btn-sm" do
+    = link_to new_account_batch_path(@current_account), class: "btn btn-default btn-sm" do
       %i.fa.fa-plus
       New Batch
   .clearfix
@@ -13,10 +13,10 @@
           .panel-heading
             .pull-left= batch.name
             .pull-right
-              = link_to edit_batch_path(batch) do
+              = link_to edit_account_batch_path(@current_account, batch) do
                 %i.fa.fa-edit
               &nbsp;
-              = link_to batch, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+              = link_to [@current_account, batch], :method => :delete, :data => { :confirm => 'Are you sure?' } do
                 %i.fa.fa-trash-o
             .clearfix
           %ul.list-group
@@ -33,7 +33,7 @@
               .pull-right= batch.papers.count
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Students', batch_students_path(batch)
-              .pull-right= link_to batch.students.count, batch_students_path(batch)
+              .pull-left= link_to 'Students', account_batch_students_path(@current_account, batch)
+              .pull-right= link_to batch.students.count, account_batch_students_path(@current_account, batch)
               .clearfix
 .clearfix

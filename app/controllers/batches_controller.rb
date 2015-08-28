@@ -4,7 +4,7 @@ class BatchesController < ApplicationController
   # GET /batches
   # GET /batches.json
   def index
-    @batches = Batch.all
+    @batches = Batch.where(:account_id => @current_account.id).all
   end
 
   # GET /batches/1
@@ -25,11 +25,12 @@ class BatchesController < ApplicationController
   # POST /batches.json
   def create
     @batch = Batch.new(batch_params)
+    @batch.account_id = @current_account.id
 
     respond_to do |format|
       if @batch.save
-        format.html { redirect_to @batch, notice: 'Batch was successfully created.' }
-        format.json { render :show, status: :created, location: @batch }
+        format.html { redirect_to account_batches_path(@current_account), notice: 'Batch was successfully created.' }
+        format.json { render :show, status: :created, location: [@current_account,@batch] }
       else
         format.html { render :new }
         format.json { render json: @batch.errors, status: :unprocessable_entity }
@@ -42,8 +43,8 @@ class BatchesController < ApplicationController
   def update
     respond_to do |format|
       if @batch.update(batch_params)
-        format.html { redirect_to @batch, notice: 'Batch was successfully updated.' }
-        format.json { render :show, status: :ok, location: @batch }
+        format.html { redirect_to account_batches_path(@current_account), notice: 'Batch was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@current_account,@batch] }
       else
         format.html { render :edit }
         format.json { render json: @batch.errors, status: :unprocessable_entity }
@@ -64,11 +65,11 @@ class BatchesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
-      @batch = Batch.find(params[:id])
+      @batch = Batch.where(:account_id => @current_account.id, :id => params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def batch_params
-      params.require(:batch).permit(:name, :account_id)
+      params.require(:batch).permit(:name)
     end
 end

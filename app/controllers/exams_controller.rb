@@ -4,7 +4,7 @@ class ExamsController < ApplicationController
   # GET /exams
   # GET /exams.json
   def index
-    @exams = Exam.all
+    @exams = Exam.where(:account_id => @current_account.id).all
   end
 
   # GET /exams/1
@@ -25,11 +25,12 @@ class ExamsController < ApplicationController
   # POST /exams.json
   def create
     @exam = Exam.new(exam_params)
+    @exam.account_id = @current_account.id
 
     respond_to do |format|
       if @exam.save
-        format.html { redirect_to @exam, notice: 'Exam was successfully created.' }
-        format.json { render :show, status: :created, location: @exam }
+        format.html { redirect_to account_exams_path(@current_account), notice: 'Exam was successfully created.' }
+        format.json { render :show, status: :created, location: [@current_account, @exam] }
       else
         format.html { render :new }
         format.json { render json: @exam.errors, status: :unprocessable_entity }
@@ -42,8 +43,8 @@ class ExamsController < ApplicationController
   def update
     respond_to do |format|
       if @exam.update(exam_params)
-        format.html { redirect_to @exam, notice: 'Exam was successfully updated.' }
-        format.json { render :show, status: :ok, location: @exam }
+        format.html { redirect_to account_exams_path(@current_account), notice: 'Exam was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@current_account, @exam] }
       else
         format.html { render :edit }
         format.json { render json: @exam.errors, status: :unprocessable_entity }
@@ -56,7 +57,7 @@ class ExamsController < ApplicationController
   def destroy
     @exam.destroy
     respond_to do |format|
-      format.html { redirect_to exams_url, notice: 'Exam was successfully destroyed.' }
+      format.html { redirect_to account_exams_url(@current_account), notice: 'Exam was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,11 +65,11 @@ class ExamsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
-      @exam = Exam.find(params[:id])
+      @exam = Exam.where(:account_id => @current_account.id, :id => params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def exam_params
-      params.require(:exam).permit(:name,:duration,:start_time,:end_time,:batch_id,:account_id)
+      params.require(:exam).permit(:name,:duration,:start_time,:end_time,:batch_id)
     end
 end

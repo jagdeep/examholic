@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
 
   def set_current
     session[:current_account_id] = params[:id]
-    redirect_to :back
+    redirect_to root_url
   end
 
   # GET /accounts

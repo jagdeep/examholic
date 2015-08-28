@@ -28,8 +28,8 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         @paper.questions << @question
-        format.html { redirect_to exam_paper_questions_path(@paper.exam_id, @paper), notice: 'Paper was successfully added.' }
-        format.json { render :show, status: :created, location: exam_paper_questions_path(@paper.exam_id, @paper) }
+        format.html { redirect_to account_exam_paper_questions_path(@current_account, @paper.exam_id, @paper), notice: 'Paper was successfully added.' }
+        format.json { render :show, status: :created, location: account_exam_paper_questions_path(@current_account, @paper.exam_id, @paper) }
       else
         format.html { render :new }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to exam_paper_questions_path(@paper.exam_id, @paper), notice: 'Paper was successfully updated.' }
+        format.html { redirect_to account_exam_paper_questions_path(@current_account, @paper.exam_id, @paper), notice: 'Paper was successfully updated.' }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -52,20 +52,20 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to exam_paper_questions_path(@paper.exam_id, @paper), notice: 'Paper was successfully removed.' }
+      format.html { redirect_to account_exam_paper_questions_path(@current_account, @paper.exam_id, @paper), notice: 'Paper was successfully removed.' }
       format.json { head :no_content }
     end
   end
 
   private
     def find_paper
-      @exam = Exam.find(params[:exam_id])
-      @paper = @exam.papers.where(:id => params[:paper_id]).first
+      @exam = Exam.where(:account_id => @current_account.id, :id => params[:exam_id]).first
+      @paper = Paper.where(:exam_id => @exam.id, :id => params[:paper_id]).first
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_question
-      @question = Question.find(params[:id])
+      @question = Question.where(:account_id => @current_account.id, :id => params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

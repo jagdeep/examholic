@@ -4,12 +4,11 @@
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
-    %a.navbar-brand(href="#")
+    %a.navbar-brand(href="/")
       %i.fa.fa-graduation-cap
+      Examholic
       - if @current_account
-        = @current_account.name
-      - else
-        Examholic
+        %small{style: "font-size:11px"}= "/ #{@current_account.name}"
     .navbar-collapse.collapse.navbar-responsive-collapse
       %ul.nav.navbar-nav.pull-right
         - if teacher_signed_in?

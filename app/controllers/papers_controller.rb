@@ -28,8 +28,8 @@ class PapersController < ApplicationController
 
     respond_to do |format|
       if @paper.save
-        format.html { redirect_to exam_papers_path(@exam), notice: 'Paper was successfully added.' }
-        format.json { render :show, status: :created, location: exam_papers_path(@exam) }
+        format.html { redirect_to account_exam_papers_path(@current_account, @exam), notice: 'Paper was successfully added.' }
+        format.json { render :show, status: :created, location: account_exam_papers_path(@current_account, @exam) }
       else
         format.html { render :new }
         format.json { render json: @paper.errors, status: :unprocessable_entity }
@@ -39,8 +39,8 @@ class PapersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @paper.update(batch_params)
-        format.html { redirect_to @paper, notice: 'Paper was successfully updated.' }
+      if @paper.update(paper_params)
+        format.html { redirect_to account_exam_papers_path(@current_account, @exam), notice: 'Paper was successfully updated.' }
         format.json { render :show, status: :ok, location: @paper }
       else
         format.html { render :edit }
@@ -52,19 +52,19 @@ class PapersController < ApplicationController
   def destroy
     @paper.destroy
     respond_to do |format|
-      format.html { redirect_to exam_papers_path(@exam), notice: 'Paper was successfully removed.' }
+      format.html { redirect_to account_exam_papers_path(@current_account, @exam), notice: 'Paper was successfully removed.' }
       format.json { head :no_content }
     end
   end
 
   private
     def find_exam
-      @exam = Exam.find(params[:exam_id])
+      @exam = Exam.where(:account_id => @current_account.id, :id => params[:exam_id]).first
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_paper
-      @paper = Paper.find(params[:id])
+      @paper = Paper.where(:account_id => @current_account.id, :id => params[:id], :exam_id => params[:exam_id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

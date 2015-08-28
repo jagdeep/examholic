@@ -36,8 +36,8 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save and @subscription = Subscription.where(:batch_id => @batch.id, :student_id => @student.id, :account_id => @batch.account_id).first_or_create
-        format.html { redirect_to batch_students_path(@batch), notice: 'Student was successfully added.' }
-        format.json { render :show, status: :created, location: batch_students_path(@batch) }
+        format.html { redirect_to account_batch_students_path(@current_account, @batch), notice: 'Student was successfully added.' }
+        format.json { render :show, status: :created, location: account_batch_students_path(@current_account, @batch) }
       else
         format.html { render :new }
         format.json { render json: @student.errors, status: :unprocessable_entity }
@@ -50,19 +50,19 @@ class StudentsController < ApplicationController
   def destroy
     @batch.subscriptions.where(:student_id => @student.id).first.try(:destroy)
     respond_to do |format|
-      format.html { redirect_to batch_students_path(@batch), notice: 'Student was successfully removed.' }
+      format.html { redirect_to account_batch_students_path(@current_account, @batch), notice: 'Student was successfully removed.' }
       format.json { head :no_content }
     end
   end
 
   private
     def find_batch
-      @batch = Batch.find(params[:batch_id])
+      @batch = Batch.where(:account_id => @current_account, :id => params[:batch_id]).first
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_student
-      @student = Student.find(params[:id])
+      @student = @batch.students.where(:id => params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
