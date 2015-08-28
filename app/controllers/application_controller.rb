@@ -8,7 +8,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_account
   before_action :set_current_account
 
+  helper_method :current_user
+
   private
+
+  def current_user
+    @current_user ||= (current_teacher || current_student)
+  end
 
   def current_account
     @current_account
@@ -16,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_account
     session[:current_account_id] = params[:account_id] if params[:account_id].present?
-    @current_account = Account.find(session[:current_account_id]) if session[:current_account_id].present?
+    @current_account = current_user.accounts.where(:id => session[:current_account_id]).first if session[:current_account_id].present?
   end
 
   def auth_user!

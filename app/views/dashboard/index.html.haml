@@ -4,7 +4,7 @@
       %h3.panel-title Accounts
     .panel-body
       .list-group
-        - current_teacher.owned_accounts.each do |account|
+        - current_user.accounts.each do |account|
           = link_to set_current_account_path(account.id), method: :put, class: 'list-group-item' do
             %h5.list-group-item-heading
               %i.fa{class: (@current_account.try(:id) == account.id ? 'fa-circle' : 'fa-circle-o')}

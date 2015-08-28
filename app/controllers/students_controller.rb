@@ -27,7 +27,7 @@ class StudentsController < ApplicationController
   def create
     # ActiveRecord::Base.transaction do
     # end
-    @student = Student.where(:phone => student_params[:phone]).first
+    @student = Student.where(:email => student_params[:email]).first
     unless @student
       @student = Student.new(student_params)
       @student.password = '123456789'
