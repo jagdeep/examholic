@@ -1,9 +1,10 @@
 class Account < ActiveRecord::Base
-  has_and_belongs_to_many :teachers
   has_and_belongs_to_many :streams
   has_many :batches
   has_many :subscriptions
   has_many :students, :through => :subscriptions
+  has_many :account_teachers
+  has_many :teachers, :through => :account_teachers
   has_many :exams
   has_many :exam_sessions
   has_many :papers

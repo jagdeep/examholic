@@ -5,7 +5,8 @@ class Teacher < ActiveRecord::Base
 
   has_and_belongs_to_many :streams
   has_and_belongs_to_many :subjects
-  has_and_belongs_to_many :accounts
+  has_many :account_teachers
+  has_many :accounts, :through => :account_teachers
   has_many :batches, :through => :accounts
 
   validates :name, :presence => true

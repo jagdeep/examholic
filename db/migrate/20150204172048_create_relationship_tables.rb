@@ -32,10 +32,6 @@ class CreateRelationshipTables < ActiveRecord::Migration
       t.integer :account_id
       t.integer :stream_id
     end
-    create_table :accounts_teachers, :id => false do |t|
-      t.integer :account_id
-      t.integer :teacher_id
-    end
     create_table :papers_questions, :id => false do |t|
       t.integer :paper_id
       t.integer :question_id

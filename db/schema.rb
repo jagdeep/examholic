@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825202509) do
+ActiveRecord::Schema.define(version: 20150830160502) do
+
+  create_table "account_teachers", force: :cascade do |t|
+    t.integer  "account_id", limit: 4
+    t.integer  "teacher_id", limit: 4
+    t.boolean  "admin"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "account_teachers", ["account_id"], name: "index_account_teachers_on_account_id", using: :btree
+  add_index "account_teachers", ["teacher_id"], name: "index_account_teachers_on_teacher_id", using: :btree
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -26,11 +37,6 @@ ActiveRecord::Schema.define(version: 20150825202509) do
   create_table "accounts_streams", id: false, force: :cascade do |t|
     t.integer "account_id", limit: 4
     t.integer "stream_id",  limit: 4
-  end
-
-  create_table "accounts_teachers", id: false, force: :cascade do |t|
-    t.integer "account_id", limit: 4
-    t.integer "teacher_id", limit: 4
   end
 
   create_table "active_admin_comments", force: :cascade do |t|
