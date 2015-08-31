@@ -25,6 +25,11 @@
               %i.fa.fa-users
               Batches
         - if teacher_signed_in?
+          - if current_teacher.is_admin?(current_account.id)
+            %li{:class => ('active' if controller_name == 'accounts')}
+              = link_to accounts_path do
+                %i.fa.fa-bars
+                Accounts
           %li.dropdown
             = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
               = current_teacher.name

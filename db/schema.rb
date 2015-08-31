@@ -39,6 +39,11 @@ ActiveRecord::Schema.define(version: 20150830160502) do
     t.integer "stream_id",  limit: 4
   end
 
+  create_table "accounts_teachers", id: false, force: :cascade do |t|
+    t.integer "account_id", limit: 4
+    t.integer "teacher_id", limit: 4
+  end
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
     t.text     "body",          limit: 65535

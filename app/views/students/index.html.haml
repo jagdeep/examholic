@@ -14,16 +14,16 @@
 %table.table
   %thead
     %tr
-      %th Phone
       %th Name
       %th Email
+      %th Phone
       %th Actions
 
   %tbody
     - @students.each do |student|
       %tr
-        %td= '******'+student.phone[-4..-1].to_s
         %td= student.name
         %td= student.email
+        %td= '******'+student.phone[-4..-1].to_s
         %td= link_to 'Remove', account_batch_student_path(@current_account, @batch, student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
 %br

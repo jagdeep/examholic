@@ -1,0 +1,23 @@
+%div
+  %h6.text-uppercase.pull-left= @account.name
+  %p.pull-right
+    = link_to new_account_teacher_path(@account), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      Add
+  .clearfix
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Phone
+      %th Actions
+
+  %tbody
+    - @teachers.each do |teacher|
+      %tr
+        %td= teacher.name
+        %td= teacher.email
+        %td= '******'+teacher.phone[-4..-1].to_s
+        %td= link_to 'Remove', account_teacher_path(@account, teacher), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
+%br

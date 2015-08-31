@@ -1,24 +1,9 @@
-%div
-  %h6.text-uppercase.pull-left Accounts
-  %p.pull-right
-    = link_to new_account_path, class: "btn btn-default btn-sm" do
-      %i.fa.fa-plus
-      New Account
-  .clearfix
 - @accounts.in_groups_of(2, false) do |account_group|
   .row
     - account_group.each do |account|
       .col-md-6
         .panel.panel-default
-          .panel-heading
-            .pull-left= account.name
-            .pull-right
-              = link_to edit_account_path(account) do
-                %i.fa.fa-edit
-              &nbsp;
-              = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                %i.fa.fa-trash-o
-            .clearfix
+          .panel-heading= account.name
           %ul.list-group
             %li.list-group-item
               .pull-left Email
@@ -32,5 +17,20 @@
               .pull-left Created at
               .pull-right= account.created_at
               .clearfix
-
+            %li.list-group-item
+              .pull-left Exams
+              .pull-right= account.exams.count
+              .clearfix
+            %li.list-group-item
+              .pull-left Batches
+              .pull-right= account.batches.count
+              .clearfix
+            %li.list-group-item
+              .pull-left Students
+              .pull-right= account.students.count
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Teachers', account_teachers_path(current_account)
+              .pull-right= link_to account.teachers.count, account_teachers_path(current_account)
+              .clearfix
 .clearfix

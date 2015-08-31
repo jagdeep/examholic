@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       put :set_current
     end
+    resources :teachers
     resources :batches do
       resources :students
     end
