@@ -25,12 +25,25 @@ class TeachersController < ApplicationController
     end
 
     respond_to do |format|
-      if @teacher.save and AccountTeacher.where(:account_id => @account.id, :teacher_id => @teacher.id, :admin => params[:admin]).first_or_create
+      if @teacher.save and AccountTeacher.where(:account_id => @account.id, :teacher_id => @teacher.id, :admin => false).first_or_create
         format.html { redirect_to account_teachers_path(@account), notice: 'Teacher was successfully added.' }
         format.json { render :show, status: :created, location: account_teachers_path(@account) }
       else
         format.html { render :new }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    @account_teacher = AccountTeacher.where(:account_id => @account.id, :teacher_id => params[:id]).first
+    respond_to do |format|
+      if @account_teacher.toggle!(:admin)
+        format.html { redirect_to account_teachers_path(@account), notice: 'Teacher was successfully updated.' }
+        format.json { render :show, status: :updated, location: account_teachers_path(@account) }
+      else
+        format.html { redirect_to account_teachers_path(@account), alert: 'Error! Unable to update teacher.' }
+        format.json { render json: ["Unable to process"], status: :unprocessable_entity }
       end
     end
   end
@@ -46,6 +59,9 @@ class TeachersController < ApplicationController
   private
     def find_account
       @account = current_teacher.admin_accounts.where(:id => params[:account_id]).first
+      if @account.blank?
+        redirect_to root_url and return
+      end
     end
 
     # Use callbacks to share common setup or constraints between actions.

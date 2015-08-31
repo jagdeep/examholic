@@ -7,7 +7,7 @@ class Teacher < ActiveRecord::Base
   has_and_belongs_to_many :subjects
   has_many :account_teachers
   has_many :accounts, :through => :account_teachers
-  has_many :admin_accounts, :through => :account_teachers
+  has_many :admin_accounts, ->{ where('account_teachers.admin = ?', true) }, :through => :account_teachers, :source => :account
   has_many :batches, :through => :accounts
 
   validates :name, :presence => true
