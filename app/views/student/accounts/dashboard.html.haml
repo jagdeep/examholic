@@ -1,0 +1,21 @@
+.col-md-4
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Accounts
+    .panel-body
+      .list-group
+        - @accounts.each do |account|
+          = link_to set_current_student_account_path(account.id), method: :put, class: 'list-group-item' do
+            %h5.list-group-item-heading
+              %i.fa{class: (@current_account.try(:id) == account.id ? 'fa-circle' : 'fa-circle-o')}
+              = account.name
+.col-md-4
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Newly Published
+    .panel-body Panel content
+.col-md-4
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Upcoming Exams
+    .panel-body Panel content

@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   namespace :manage do
     resources :accounts do
+      collection do
+        get :dashboard
+      end
       member do
         put :set_current
       end
@@ -21,6 +24,9 @@ Rails.application.routes.draw do
 
   namespace :student do
     resources :accounts do
+      collection do
+        get :dashboard
+      end
       member do
         put :set_current
       end
@@ -39,23 +45,23 @@ Rails.application.routes.draw do
   devise_for :teachers
   devise_for :students
 
-  devise_scope :manage do
-    authenticated :teacher do
-      root 'manage/accounts#index', as: :teacher_root
-    end
-  end
-
-  devise_scope :student do
-    authenticated :student do
-      root 'student/accounts#index', as: :student_root
-    end
-  end
+  # devise_scope :manage do
+  #   authenticated :teacher do
+  #     root 'manage/accounts#dashboard', as: :teacher_root
+  #   end
+  # end
+  #
+  # devise_scope :student do
+  #   authenticated :student do
+  #     root 'student/accounts#dashboard', as: :student_root
+  #   end
+  # end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'student/accounts#index'
+  root 'dashboard#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

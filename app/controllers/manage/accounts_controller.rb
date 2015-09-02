@@ -3,13 +3,17 @@ class Manage::AccountsController < Manage::ApplicationController
 
   def set_current
     session[:current_account_id] = params[:id]
-    redirect_to root_url
+    redirect_to dashboard_manage_accounts_path
   end
 
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = current_teacher.admin_accounts
+    @accounts = current_teacher.accounts
+  end
+
+  def dashboard
+    @accounts = current_teacher.accounts
   end
 
   # GET /accounts/1

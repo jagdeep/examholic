@@ -3,12 +3,16 @@ class Student::AccountsController < Student::ApplicationController
 
   def set_current
     session[:current_account_id] = params[:id]
-    redirect_to root_url
+    redirect_to dashboard_student_accounts_path
   end
 
   # GET /accounts
   # GET /accounts.json
   def index
+    @accounts = Account.all
+  end
+
+  def dashboard
     @accounts = Account.all
   end
 

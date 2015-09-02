@@ -30,7 +30,8 @@
               .pull-right= account.students.count
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Teachers', manage_account_teachers_path(account)
-              .pull-right= link_to account.teachers.count, manage_account_teachers_path(account)
+              - is_admin = current_teacher.is_admin?(account.id)
+              .pull-left= link_to_if is_admin, 'Teachers', manage_account_teachers_path(account)
+              .pull-right= link_to_if is_admin, account.teachers.count, manage_account_teachers_path(account)
               .clearfix
 .clearfix

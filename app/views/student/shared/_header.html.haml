@@ -11,8 +11,8 @@
         %small{style: "font-size:11px"}= "/ #{@current_account.name}"
     .navbar-collapse.collapse.navbar-responsive-collapse
       %ul.nav.navbar-nav.pull-right
-        %li{:class => ('active' if controller_name == 'accounts' and action_name == 'index')}
-          = link_to root_path do
+        %li{:class => ('active' if controller_name == 'accounts' and action_name == 'dashboard')}
+          = link_to dashboard_student_accounts_path do
             %i.fa.fa-home
             Dashboard
         - if @current_account
@@ -24,6 +24,10 @@
             = link_to student_account_batches_path(@current_account) do
               %i.fa.fa-users
               Batches
+        %li{:class => ('active' if controller_name == 'accounts' and action_name != 'dashboard')}
+          = link_to student_accounts_path do
+            %i.fa.fa-bars
+            Accounts
         - if student_signed_in?
           %li.dropdown
             = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
