@@ -11,6 +11,7 @@ class Teacher < ActiveRecord::Base
   has_many :batches, :through => :accounts
 
   validates :name, :presence => true
+  validates :email, :presence => true
   validates :phone, :presence => true, :numericality => true, :uniqueness => true
 
   def is_admin? account_id

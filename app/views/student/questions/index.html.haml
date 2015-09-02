@@ -1,0 +1,12 @@
+%table.table
+  %thead
+    %tr
+      %th Question
+      %th Topic
+
+  %tbody
+    - @questions.each do |question|
+      %tr
+        %td= question.title
+        %td= question.topic
+%br

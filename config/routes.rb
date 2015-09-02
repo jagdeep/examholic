@@ -1,19 +1,37 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  get 'dashboard/index'
 
-  resources :accounts do
-    member do
-      put :set_current
+  namespace :manage do
+    resources :accounts do
+      member do
+        put :set_current
+      end
+      resources :teachers
+      resources :batches do
+        resources :students
+      end
+      resources :exams do
+        resources :papers do
+          resources :questions
+        end
+      end
     end
-    resources :teachers
-    resources :batches do
-      resources :students
-    end
-    resources :exams do
-      resources :papers do
-        resources :questions
+  end
+
+  namespace :student do
+    resources :accounts do
+      member do
+        put :set_current
+      end
+      resources :teachers
+      resources :batches do
+        resources :students
+      end
+      resources :exams do
+        resources :papers do
+          resources :questions
+        end
       end
     end
   end
@@ -21,11 +39,23 @@ Rails.application.routes.draw do
   devise_for :teachers
   devise_for :students
 
+  devise_scope :manage do
+    authenticated :teacher do
+      root 'manage/accounts#index', as: :teacher_root
+    end
+  end
+
+  devise_scope :student do
+    authenticated :student do
+      root 'student/accounts#index', as: :student_root
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'dashboard#index'
+  root 'student/accounts#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

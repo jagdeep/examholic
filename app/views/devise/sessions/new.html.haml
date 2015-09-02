@@ -11,4 +11,10 @@
           .form-actions
             = f.button :submit, "Log in"
         %br
+        - if resource.class == Student
+          Are you a teacher?
+          = link_to "Teacher Login", new_teacher_session_path
+        - else
+          Are you a student?
+          = link_to "Student Login", new_student_session_path
         =# render "devise/shared/links"

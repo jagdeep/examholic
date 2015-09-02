@@ -1,0 +1,29 @@
+%div
+  %h6.text-uppercase.pull-left= @paper.name
+  %p.pull-right
+    = link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      Add
+    = link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+      %i.fa.fa-upload
+      Import
+    = link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper), class: "btn btn-default btn-sm" do
+      %i.fa.fa-download
+      Export
+  .clearfix
+%table.table
+  %thead
+    %tr
+      %th Question
+      %th Topic
+      %th Actions
+
+  %tbody
+    - @questions.each do |question|
+      %tr
+        %td= question.title
+        %td= question.topic
+        %td
+          = link_to 'Edit', edit_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper, question), class: "btn btn-default btn-xs"
+          = link_to 'Remove', manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper, question), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
+%br

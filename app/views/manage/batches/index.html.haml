@@ -1,0 +1,35 @@
+%div
+  %h6.text-uppercase.pull-left Student Batches
+  %p.pull-right
+    = link_to new_manage_account_batch_path(@current_account), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Batch
+  .clearfix
+- @batches.in_groups_of(2, false) do |batch_group|
+  .row
+    - batch_group.each do |batch|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= batch.name
+            .pull-right
+              = link_to edit_manage_account_batch_path(@current_account, batch) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to [:manage, @current_account, batch], :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Account
+              .pull-right= batch.account.name
+              .clearfix
+            %li.list-group-item
+              .pull-left Exams
+              .pull-right= batch.exams.count
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Students', manage_account_batch_students_path(@current_account, batch)
+              .pull-right= link_to batch.students.count, manage_account_batch_students_path(@current_account, batch)
+              .clearfix
+.clearfix

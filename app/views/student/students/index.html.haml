@@ -1,0 +1,29 @@
+%div
+  %h6.text-uppercase.pull-left= @batch.name
+  %p.pull-right
+    = link_to new_manage_account_batch_student_path(@current_account, @batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      Add
+    = link_to new_manage_account_batch_student_path(@current_account, @batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-upload
+      Import
+    = link_to new_manage_account_batch_student_path(@current_account, @batch), class: "btn btn-default btn-sm" do
+      %i.fa.fa-download
+      Export
+  .clearfix
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Phone
+      %th Actions
+
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= student.name
+        %td= student.email
+        %td= '******'+student.phone[-4..-1].to_s
+        %td= link_to 'Remove', manage_account_batch_student_path(@current_account, @batch, student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs"
+%br

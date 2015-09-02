@@ -1,0 +1,43 @@
+%div
+  %h6.text-uppercase.pull-left #{@exam.name} - Papers
+  %p.pull-right
+    = link_to new_manage_account_exam_paper_path(@current_account, @exam), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Paper
+  .clearfix
+- @papers.in_groups_of(2, false) do |paper_group|
+  .row
+    - paper_group.each do |paper|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= paper.name
+            .pull-right
+              = link_to edit_manage_account_exam_paper_path(@current_account, @exam, paper) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to manage_account_exam_paper_path(@current_account, @exam, paper), :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Duration
+              .pull-right= paper.duration
+              .clearfix
+            %li.list-group-item
+              .pull-left Status
+              .pull-right= paper.status
+              .clearfix
+            %li.list-group-item
+              .pull-left Marks per question
+              .pull-right= paper.marks_per_question
+              .clearfix
+            %li.list-group-item
+              .pull-left Negative marks per question
+              .pull-right= paper.negative_marks_per_question
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Questions', manage_account_exam_paper_questions_path(@current_account, @exam, paper)
+              .pull-right= link_to paper.questions.count, manage_account_exam_paper_questions_path(@current_account, @exam, paper)
+              .clearfix
+.clearfix

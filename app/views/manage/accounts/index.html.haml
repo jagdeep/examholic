@@ -1,0 +1,36 @@
+- @accounts.in_groups_of(2, false) do |account_group|
+  .row
+    - account_group.each do |account|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading= account.name
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Email
+              .pull-right= account.email
+              .clearfix
+            %li.list-group-item
+              .pull-left Phone
+              .pull-right= account.phone
+              .clearfix
+            %li.list-group-item
+              .pull-left Created at
+              .pull-right= account.created_at
+              .clearfix
+            %li.list-group-item
+              .pull-left Exams
+              .pull-right= account.exams.count
+              .clearfix
+            %li.list-group-item
+              .pull-left Batches
+              .pull-right= account.batches.count
+              .clearfix
+            %li.list-group-item
+              .pull-left Students
+              .pull-right= account.students.count
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Teachers', manage_account_teachers_path(account)
+              .pull-right= link_to account.teachers.count, manage_account_teachers_path(account)
+              .clearfix
+.clearfix

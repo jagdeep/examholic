@@ -1,0 +1,28 @@
+- @exams.in_groups_of(2, false) do |exam_group|
+  .row
+    - exam_group.each do |exam|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading= exam.name
+          %ul.list-group
+            %li.list-group-item
+              .pull-left Start at
+              .pull-right= exam.start_time
+              .clearfix
+            %li.list-group-item
+              .pull-left Finish at
+              .pull-right= exam.end_time
+              .clearfix
+            %li.list-group-item
+              .pull-left Batch
+              .pull-right= exam.batch.name
+              .clearfix
+            %li.list-group-item
+              .pull-left Institute
+              .pull-right= exam.account.name
+              .clearfix
+            %li.list-group-item
+              .pull-left= link_to 'Papers', student_account_exam_papers_path(@current_account, exam)
+              .pull-right= link_to exam.papers.count, student_account_exam_papers_path(@current_account, exam)
+              .clearfix
+.clearfix
