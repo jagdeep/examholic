@@ -5,10 +5,8 @@
     .panel-body
       .list-group
         - @accounts.each do |account|
-          = link_to set_current_manage_account_path(account.id), method: :put, class: 'list-group-item' do
-            %h5.list-group-item-heading
-              %i.fa{class: (@current_account.try(:id) == account.id ? 'fa-circle' : 'fa-circle-o')}
-              = account.name
+          = link_to set_current_manage_account_path(account.id), method: :put, class: "list-group-item #{'active' if account.id == current_account.id}" do
+            %h5= account.name
 .col-md-4
   .panel.panel-default
     .panel-heading
