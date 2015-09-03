@@ -29,8 +29,8 @@
           Examholic
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.pull-right
-            %li{:class => ('active' if resource_name == :student)}= link_to 'Students', new_student_session_path
-            %li{:class => ('active' if resource_name == :teacher)}= link_to 'Teachers', new_teacher_session_path
+            %li{:class => ('active' if defined?(resource_name) and resource_name == :student)}= link_to 'Students', new_student_session_path
+            %li{:class => ('active' if defined?(resource_name) and resource_name == :teacher)}= link_to 'Teachers', new_teacher_session_path
     .container
       .row
         = bootstrap_flash

@@ -12,5 +12,6 @@
  *
  *= require bootstrap_and_overrides
  *= require scaffolds
+ *= require bootstrap-datetimepicker
  *= require_self
  */

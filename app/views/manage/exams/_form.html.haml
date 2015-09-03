@@ -6,8 +6,8 @@
         = simple_form_for [:manage, @current_account, @exam] do |f|
           = f.input :name
           = f.input :duration
-          = f.input :start_time, :as => :string
-          = f.input :end_time, :as => :string
+          = f.input :start_time, :as => :datetime_picker
+          = f.input :end_time, :as => :datetime_picker
           = f.input :batch_id, :as => :select, :collection => @current_account.batches.all
           = f.button :submit, :class => 'btn-primary'
           = link_to 'Cancel', manage_account_exams_path(@current_account), :class => 'btn btn-default'

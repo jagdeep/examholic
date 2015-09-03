@@ -1,5 +1,4 @@
 class Student::ApplicationController < ApplicationController
-  layout 'student/application'
   before_action :authenticate_student!
 
   before_action :set_current_account

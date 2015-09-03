@@ -1,5 +1,4 @@
 class Manage::ApplicationController < ApplicationController
-  layout 'manage/application'
   before_action :authenticate_teacher!
 
   before_action :set_current_account
