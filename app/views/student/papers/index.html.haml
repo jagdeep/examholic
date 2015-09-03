@@ -22,7 +22,7 @@
               .pull-right= paper.negative_marks_per_question
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Questions', student_account_exam_paper_questions_path(@current_account, @exam, paper)
-              .pull-right= link_to paper.questions.count, student_account_exam_paper_questions_path(@current_account, @exam, paper)
+              .pull-left Questions
+              .pull-right= paper.questions.count
               .clearfix
 .clearfix

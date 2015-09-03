@@ -16,7 +16,7 @@
             %i.fa.fa-home
             Dashboard
         - if @current_account
-          %li{:class => ('active' if controller_name == 'exams')}
+          %li{:class => ('active' if controller_name == 'exams' or controller_name == 'papers')}
             = link_to manage_account_exams_path(@current_account) do
               %i.fa.fa-check-square
               Exams

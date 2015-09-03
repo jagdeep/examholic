@@ -3,15 +3,25 @@
     - exam_group.each do |exam|
       .col-md-6
         .panel.panel-default
-          .panel-heading= exam.name
+          .panel-heading
+            .pull-left= exam.name
+            .pull-right
+              - if Time.now >= exam.start_time and Time.now < exam.end_time
+                = link_to 'Start Exam', '', class: 'btn btn-primary btn-xs'
+              - elsif Time.now < exam.start_time
+                = distance_of_time_in_words_to_now exam.start_time
+                to go
+              - else Time.now >= exam.end_time
+                expired!
+            .clearfix
           %ul.list-group
             %li.list-group-item
               .pull-left Start at
-              .pull-right= exam.start_time
+              .pull-right= nice_time exam.start_time
               .clearfix
             %li.list-group-item
               .pull-left Finish at
-              .pull-right= exam.end_time
+              .pull-right= nice_time exam.end_time
               .clearfix
             %li.list-group-item
               .pull-left Batch

@@ -5,8 +5,7 @@
     .panel-body
       .list-group
         - @accounts.each do |account|
-          = link_to set_current_student_account_path(account.id), method: :put, class: "list-group-item #{'active' if is_current?(account.id)}" do
-            %h5= account.name
+          .list-group-item= account.name
 .col-md-4
   .panel.panel-default
     .panel-heading
