@@ -3,3 +3,27 @@ a{
     text-decoration: none;
   }
 }
+
+.docs-section {
+  margin-bottom: 60px;
+  .callout {
+    padding: 15px 20px 15px 20px;
+    margin: 15px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    h4 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+  }
+  .callout-info {
+    border-left-color: #1b809e;
+    h4 {
+      color: #1b809e;
+    }
+  }
+  .bs-callout-warning {
+    border-left-color: #aa6708;
+  }
+}

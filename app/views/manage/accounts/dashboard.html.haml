@@ -5,7 +5,7 @@
     .panel-body
       .list-group
         - @accounts.each do |account|
-          = link_to set_current_manage_account_path(account.id), method: :put, class: "list-group-item #{'active' if account.id == current_account.id}" do
+          = link_to set_current_manage_account_path(account.id), method: :put, class: "list-group-item #{'active' if is_current?(account.id)}" do
             %h5= account.name
 .col-md-4
   .panel.panel-default
