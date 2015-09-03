@@ -32,7 +32,7 @@
               .pull-right= exam.account.name
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Papers', student_account_exam_papers_path(@current_account, exam)
-              .pull-right= link_to exam.papers.count, student_account_exam_papers_path(@current_account, exam)
+              .pull-left= link_to 'Papers', student_exam_papers_path(exam)
+              .pull-right= link_to exam.papers.count, student_exam_papers_path(exam)
               .clearfix
 .clearfix

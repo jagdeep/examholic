@@ -16,11 +16,11 @@
             %i.fa.fa-home
             Dashboard
         %li{:class => ('active' if controller_name == 'exams' or controller_name == 'papers')}
-          = link_to student_account_exams_path(@current_account) do
+          = link_to student_exams_path do
             %i.fa.fa-check-square
             Exams
         %li{:class => ('active' if controller_name == 'batches' or controller_name == 'students')}
-          = link_to student_account_batches_path(@current_account) do
+          = link_to student_batches_path do
             %i.fa.fa-users
             Batches
         %li{:class => ('active' if controller_name == 'accounts' and action_name != 'dashboard')}

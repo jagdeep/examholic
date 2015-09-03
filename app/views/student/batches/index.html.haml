@@ -14,7 +14,7 @@
               .pull-right= batch.exams.count
               .clearfix
             %li.list-group-item
-              .pull-left= link_to 'Students', student_account_batch_students_path(@current_account, batch)
-              .pull-right= link_to batch.students.count, student_account_batch_students_path(@current_account, batch)
+              .pull-left= link_to 'Students', student_batch_students_path(batch)
+              .pull-right= link_to batch.students.count, student_batch_students_path(batch)
               .clearfix
 .clearfix
