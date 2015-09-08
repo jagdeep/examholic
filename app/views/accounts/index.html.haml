@@ -3,7 +3,7 @@
     - account_group.each do |account|
       .col-md-6
         .panel.panel-default
-          .panel-heading= link_to account.name, student_account_path(account)
+          .panel-heading= link_to account.name, account_path(account)
           %ul.list-group
             %li.list-group-item
               .pull-left Email

@@ -1,4 +1,5 @@
-class Student::ExamsController < Student::ApplicationController
+class ExamsController < ApplicationController
+  before_action :authenticate_student!
   before_action :set_exam, only: [:show, :edit, :update, :destroy]
 
   # GET /exams

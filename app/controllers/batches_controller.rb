@@ -1,4 +1,5 @@
-class Student::BatchesController < Student::ApplicationController
+class BatchesController < ApplicationController
+  before_action :authenticate_student!
   before_action :set_batch, only: [:show, :edit, :update, :destroy]
 
   def index

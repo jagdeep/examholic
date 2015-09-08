@@ -1,4 +1,5 @@
-class Student::PapersController < Student::ApplicationController
+class PapersController < ApplicationController
+  before_action :authenticate_student!
   before_action :find_exam
   before_action :set_paper, only: [:show]
 

@@ -12,4 +12,18 @@ class Exam < ActiveRecord::Base
   validates :duration, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
+
+  scope :live, ->{ where('start_time <= ? and end_time > ?', Time.zone.now, Time.zone.now) }
+
+  def live?
+    start_time <= Time.zone.now and end_time > Time.zone.now
+  end
+
+  def expired?
+    end_time <= Time.zone.now
+  end
+
+  def upcoming?
+    end_time > Time.zone.now
+  end
 end

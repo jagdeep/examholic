@@ -1,4 +1,5 @@
-class Manage::StudentsController < Manage::ApplicationController
+class Manage::StudentsController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :find_batch
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 

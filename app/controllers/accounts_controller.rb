@@ -1,10 +1,6 @@
-class Student::AccountsController < Student::ApplicationController
+class AccountsController < ApplicationController
+  before_action :authenticate_student!
   before_action :set_account, only: [:show, :edit, :update, :destroy]
-
-  def set_current
-    session[:current_account_id] = params[:id]
-    redirect_to dashboard_student_accounts_path
-  end
 
   # GET /accounts
   # GET /accounts.json

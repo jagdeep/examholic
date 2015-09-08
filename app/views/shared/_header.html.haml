@@ -12,19 +12,19 @@
     .navbar-collapse.collapse.navbar-responsive-collapse
       %ul.nav.navbar-nav.pull-right
         %li{:class => ('active' if controller_name == 'accounts' and action_name == 'dashboard')}
-          = link_to dashboard_student_accounts_path do
+          = link_to dashboard_accounts_path do
             %i.fa.fa-home
             Dashboard
-        %li{:class => ('active' if controller_name == 'exams' or controller_name == 'papers')}
-          = link_to student_exams_path do
+        %li{:class => ('active' if controller_name == 'exams' or controller_name == 'papers' or controller_name == 'exam_sessions')}
+          = link_to exams_path do
             %i.fa.fa-check-square
             Exams
         %li{:class => ('active' if controller_name == 'batches' or controller_name == 'students')}
-          = link_to student_batches_path do
+          = link_to batches_path do
             %i.fa.fa-users
             Batches
         %li{:class => ('active' if controller_name == 'accounts' and action_name != 'dashboard')}
-          = link_to student_accounts_path do
+          = link_to accounts_path do
             %i.fa.fa-bars
             Accounts
         - if student_signed_in?

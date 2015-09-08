@@ -1,4 +1,5 @@
-class Manage::AccountsController < Manage::ApplicationController
+class Manage::AccountsController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def set_current

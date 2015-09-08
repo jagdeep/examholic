@@ -1,4 +1,5 @@
-class Manage::ExamsController < Manage::ApplicationController
+class Manage::ExamsController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :set_exam, only: [:show, :edit, :update, :destroy]
 
   # GET /exams

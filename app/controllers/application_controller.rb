@@ -5,11 +5,21 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
   helper_method :current_account
+  before_action :set_current_account
+
+  layout :layout
 
   private
 
   def current_account
     @current_account
+  end
+
+  def set_current_account
+    if current_teacher
+      session[:current_account_id] = params[:account_id] if params[:account_id].present?
+      @current_account = current_teacher.accounts.where(:id => session[:current_account_id]).first if session[:current_account_id].present?
+    end
   end
 
   def configure_devise_permitted_parameters
@@ -23,6 +33,21 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.for(:sign_up) {
         |u| u.permit(registration_params)
       }
+    end
+  end
+
+  def layout
+    if teacher_signed_in?
+      "manage/application"
+    else
+      # only turn it off for login pages:
+      if is_a?(Devise::SessionsController) || is_a?(Devise::PasswordsController)
+        'login'
+      elsif is_a?(Devise::RegistrationsController) and action_name == 'new'
+        'login'
+      else
+        'application'
+      end
     end
   end
 end

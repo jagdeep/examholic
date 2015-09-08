@@ -1,4 +1,5 @@
-class Manage::QuestionsController < Manage::ApplicationController
+class Manage::QuestionsController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :find_paper
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 

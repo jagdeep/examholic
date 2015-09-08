@@ -1,4 +1,5 @@
-class Manage::TeachersController < Manage::ApplicationController
+class Manage::TeachersController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :find_account
   before_action :set_teacher, only: [:show, :edit, :update, :destroy]
 

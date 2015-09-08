@@ -1,4 +1,5 @@
-class Manage::BatchesController < Manage::ApplicationController
+class Manage::BatchesController < ApplicationController
+  before_action :authenticate_teacher!
   before_action :set_batch, only: [:show, :edit, :update, :destroy]
 
   # GET /batches

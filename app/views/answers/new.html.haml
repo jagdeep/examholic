@@ -1,0 +1,22 @@
+.col-md-8.col-md-offset-2
+  .jumbotron
+    %p= @question.title.html_safe
+  %br
+  .panel.panel-default
+    #answers.list-group
+      - (1..5).each do |i|
+        - if @question["option#{i}"].present?
+          = link_to @question["option#{i}"], "#", onclick: "selectOption($(this)); return false", class: 'list-group-item'
+
+  %div
+    .pull-left= link_to "Next Question", "#", class: 'btn btn-primary'
+    .pull-right
+      = link_to "Skip Question", "#", class: 'btn btn-default'
+      = link_to "Quit Paper", "#", class: 'btn btn-danger'
+    .clearfix
+
+:javascript
+  function selectOption(element){
+    $('#answers a').removeClass('active');
+    element.addClass('active');
+  }

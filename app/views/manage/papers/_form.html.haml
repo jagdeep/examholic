@@ -3,7 +3,7 @@
     .panel-heading #{action_name.humanize} Student
     .panel-body.row
       .col-md-10.col-md-offset-1
-        = simple_form_for([@current_account, @exam, @paper]) do |f|
+        = simple_form_for([:manage, @current_account, @exam, @paper]) do |f|
           = f.error_notification
 
           .form-inputs
