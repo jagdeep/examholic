@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_student!
+  layout 'answers'
 
   def new
     @paper_sessions = PaperSession.where(student_id: current_student.id, finished_at: nil).all
