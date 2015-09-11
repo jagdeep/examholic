@@ -1,28 +1,19 @@
-- @papers.in_groups_of(2, false) do |paper_group|
-  .row
-    - paper_group.each do |paper|
-      .col-md-6
-        .panel.panel-default
-          .panel-heading= paper.name
-          %ul.list-group
-            %li.list-group-item
-              .pull-left Duration
-              .pull-right= paper.duration
-              .clearfix
-            %li.list-group-item
-              .pull-left Status
-              .pull-right= paper.status
-              .clearfix
-            %li.list-group-item
-              .pull-left Marks per question
-              .pull-right= paper.marks_per_question
-              .clearfix
-            %li.list-group-item
-              .pull-left Negative marks per question
-              .pull-right= paper.negative_marks_per_question
-              .clearfix
-            %li.list-group-item
-              .pull-left Questions
-              .pull-right= paper.questions.count
-              .clearfix
-.clearfix
+%h2 Exam - #{@exam.name}
+%table.table.table-condensed
+  %tbody
+    - @papers.each do |paper|
+      %tr
+        %td
+          %h4= paper.name
+        %td.text-right
+          %h4= paper.duration.to_s + ' mins'
+          %cite Duration
+        %td.text-right
+          %h4= paper.marks_per_question
+          %cite Marks
+        %td.text-right
+          %h4= paper.negative_marks_per_question
+          %cite -ve Marks
+        %td.text-right
+          %h4= paper.questions.count
+          %cite Questions

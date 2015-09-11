@@ -5,14 +5,8 @@
       %tr
         %td
           %h4= exam.name
-          %cite
-            - if exam.live?
-              = link_to 'Begin Exam', new_exam_exam_session_path(exam)
-            - elsif exam.upcoming?
-              = distance_of_time_in_words_to_now exam.start_time
-              to go
-            - else exam.expired?
-              expired!
+          - if exam.live?
+            %cite= link_to 'Begin Exam', new_exam_exam_session_path(exam)
         %td.text-right
           %h4= link_to exam.papers.count, exam_papers_path(exam)
           %cite Papers
@@ -25,6 +19,15 @@
         %td.text-right
           %h4= exam.account.name
           %cite Account
-        %td.text-right
-          %h4= nice_time exam.start_time
-          %cite Starts At
+        - if exam.expired?
+          %td.text-right
+            %h4= distance_of_time_in_words_to_now(exam.end_time) + ' ago'
+            %cite Finished
+        - elsif exam.upcoming?
+          %td.text-right
+            %h4= distance_of_time_in_words_to_now exam.start_time
+            %cite Starts In
+        - elsif exam.live?
+          %td.text-right
+            %h4= distance_of_time_in_words_to_now(exam.end_time)
+            %cite Finishes In

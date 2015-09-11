@@ -15,5 +15,5 @@
           %h4= batch.account.name
           %cite Account
         %td.text-right
-          %h4= nice_time batch.created_at
-          %cite Created At
+          %h4= distance_of_time_in_words_to_now(batch.created_at) + ' ago'
+          %cite Started

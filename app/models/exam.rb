@@ -24,6 +24,6 @@ class Exam < ActiveRecord::Base
   end
 
   def upcoming?
-    end_time > Time.zone.now
+    start_time > Time.zone.now
   end
 end
