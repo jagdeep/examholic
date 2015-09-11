@@ -1,20 +1,19 @@
-- @batches.in_groups_of(2, false) do |batch_group|
-  .row
-    - batch_group.each do |batch|
-      .col-md-6
-        .panel.panel-default
-          .panel-heading= batch.name
-          %ul.list-group
-            %li.list-group-item
-              .pull-left Account
-              .pull-right= batch.account.name
-              .clearfix
-            %li.list-group-item
-              .pull-left Exams
-              .pull-right= batch.exams.count
-              .clearfix
-            %li.list-group-item
-              .pull-left= link_to 'Students', batch_students_path(batch)
-              .pull-right= link_to batch.students.count, batch_students_path(batch)
-              .clearfix
-.clearfix
+%h2 Batches
+%table.table.table-condensed
+  %tbody
+    - @batches.each do |batch|
+      %tr
+        %td
+          %h4= batch.name
+        %td.text-right
+          %h4= link_to batch.students.count, batch_students_path(batch)
+          %cite Students
+        %td.text-right
+          %h4= batch.exams.count
+          %cite Exams
+        %td.text-right
+          %h4= batch.account.name
+          %cite Account
+        %td.text-right
+          %h4= nice_time batch.created_at
+          %cite Created At

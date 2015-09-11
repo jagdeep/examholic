@@ -84,18 +84,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   color: inherit;
 }
-.apq {
-  font-size: 85%;
+cite {
+  display: block;
+  font-size: 10px;
+  font-style: normal;
   letter-spacing: .15em;
-  color: #888888;
+  color: #aaaaaa;
   text-transform: uppercase;
-  cite {
-    display: block;
-    margin-top: 30px;
-    font-size: 12px;
-    font-style: normal;
-    letter-spacing: .15em;
-    color: #aaaaaa;
-    text-transform: uppercase;
-  }
 }

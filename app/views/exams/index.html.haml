@@ -1,38 +1,30 @@
-- @exams.in_groups_of(2, false) do |exam_group|
-  .row
-    - exam_group.each do |exam|
-      .col-md-6
-        .panel.panel-default
-          .panel-heading
-            .pull-left= exam.name
-            .pull-right
-              - if exam.live?
-                = link_to 'Begin Exam', new_exam_exam_session_path(exam), class: 'btn btn-primary btn-xs'
-              - elsif exam.upcoming?
-                = distance_of_time_in_words_to_now exam.start_time
-                to go
-              - else exam.expired?
-                expired!
-            .clearfix
-          %ul.list-group
-            %li.list-group-item
-              .pull-left Start at
-              .pull-right= nice_time exam.start_time
-              .clearfix
-            %li.list-group-item
-              .pull-left Finish at
-              .pull-right= nice_time exam.end_time
-              .clearfix
-            %li.list-group-item
-              .pull-left Batch
-              .pull-right= exam.batch.name
-              .clearfix
-            %li.list-group-item
-              .pull-left Institute
-              .pull-right= exam.account.name
-              .clearfix
-            %li.list-group-item
-              .pull-left= link_to 'Papers', exam_papers_path(exam)
-              .pull-right= link_to exam.papers.count, exam_papers_path(exam)
-              .clearfix
-.clearfix
+%h2 Exams
+%table.table.table-condensed
+  %tbody
+    - @exams.each do |exam|
+      %tr
+        %td
+          %h4= exam.name
+          %cite
+            - if exam.live?
+              = link_to 'Begin Exam', new_exam_exam_session_path(exam)
+            - elsif exam.upcoming?
+              = distance_of_time_in_words_to_now exam.start_time
+              to go
+            - else exam.expired?
+              expired!
+        %td.text-right
+          %h4= link_to exam.papers.count, exam_papers_path(exam)
+          %cite Papers
+        %td.text-right
+          %h4= distance_of_time_in_words(exam.start_time, exam.end_time)
+          %cite Duration
+        %td.text-right
+          %h4= exam.batch.name
+          %cite Batch
+        %td.text-right
+          %h4= exam.account.name
+          %cite Account
+        %td.text-right
+          %h4= nice_time exam.start_time
+          %cite Starts At
