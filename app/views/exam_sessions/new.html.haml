@@ -9,7 +9,11 @@
             .panel-heading
               .pull-left= paper.name
               .pull-right
-                - if @exam.live?
+                - if current_student.current_paper_id
+                  - if current_student.current_paper_id == paper.id
+                    = link_to 'Resume Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post, class: 'btn btn-primary btn-xs'
+                    = link_to 'Finish Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post, class: 'btn btn-primary btn-xs'
+                - elsif @exam.live?
                   = link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post, class: 'btn btn-primary btn-xs'
               .clearfix
             %ul.list-group

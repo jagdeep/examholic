@@ -35,7 +35,6 @@ Rails.application.routes.draw do
     resources :papers do
       resources :exam_sessions, only: [:create]
     end
-    resources :exam_sessions, only: [:new]
   end
   resources :exam_sessions, only: [:index, :show]
   resources :paper_sessions, only: [:index] do

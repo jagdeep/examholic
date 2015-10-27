@@ -15,27 +15,22 @@ class ExamSessionsController < ApplicationController
 
   def create
     @exam = current_student.exams.live.where(id: params[:exam_id]).first
-    @paper = @exam.papers.where(id: params[:paper_id]).first
-    @exam_session = ExamSession.where(student_id: current_student.id, finished_at: nil).first
-    @exam_session = ExamSession.where(exam_id: @exam.id, student_id: current_student.id).first unless @exam_session
-    unless @exam_session
-      @exam_session = ExamSession.new
-      @exam_session.exam_id = @exam.id
-      @exam_session.account_id = @exam.account_id
-      @exam_session.student_id = current_student.id
-      @exam_session.save!
-    end
-    @paper_session = PaperSession.where(student_id: current_student.id, finished_at: nil).first
-    @paper_session = PaperSession.where(paper_id: @paper.id, student_id: current_student.id).first unless @paper_session
-    unless @paper_session
+    @paper = @exam.papers.find_by(id: params[:paper_id])
+    @paper_session = PaperSession.where('finished_at = ? OR paper_id = ?', nil, @paper.id).find_by(student_id: current_student.id)
+    if @paper_session
+      redirect_to :back, alert: 'You can not start this paper as you already have an unfinished paper.'
+    else
       @paper_session = PaperSession.new
       @paper_session.paper_id = @paper.id
+      @paper_session.exam_id = @exam.id
       @paper_session.account_id = @exam.account_id
       @paper_session.student_id = current_student.id
-      @paper_session.exam_session_id = @exam_session.id
-      @paper_session.save!
+      if @paper_session.save
+        redirect_to new_paper_session_answer_path(@paper_session)
+      else
+        redirect_to :back, alert: "Error! #{@paper_session.errors.full_messages.join(', ')}"
+      end
     end
-    redirect_to new_paper_session_answer_path(@paper_session)
   end
 
   private

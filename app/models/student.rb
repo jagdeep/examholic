@@ -10,6 +10,7 @@ class Student < ActiveRecord::Base
   has_many :answers
   has_many :paper_sessions
   has_many :exam_sessions
+  belongs_to :current_paper, class_name: 'Paper'
 
   validates :name,  :presence => true
   validates :email, :presence => true, :uniqueness => true

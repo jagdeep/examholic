@@ -5,6 +5,11 @@
       %tr
         %td
           %h4= paper.name
+          - if current_student.current_paper_id
+            - if current_student.current_paper_id == paper.id
+              %cite= link_to 'Resume Paper', new_paper_session_answer_path(current_paper_session)
+          - elsif @exam.live?
+            %cite= link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post
         %td.text-right
           %h4= paper.duration.to_s + ' mins'
           %cite Duration
