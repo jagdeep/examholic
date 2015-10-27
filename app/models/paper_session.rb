@@ -20,20 +20,26 @@ class PaperSession < ActiveRecord::Base
 
     self.exam_session_id = es.id
   end
-  after_create do
-    Student.where(id: student_id).first.update_attribute(:current_paper_id, paper_id)
-  end
 
   def finished?
     finished_at.present?
   end
 
-  def new_question
+  def next_question
     ques_ids = answers.pluck(:question_id)
     if ques_ids.present?
-      return questions.where("id not in (?)", ques_ids).first
+      return questions.where("questions.id not in (?)", ques_ids).first
     else
       return questions.first
+    end
+  end
+
+  def end_session
+    update_attributes(finished_at: Time.zone.now)
+    pscount = PaperSession.where(exam_session_id: id, student_id: student_id).where('finished_at is not null').count
+    pcount = Paper.where(exam_id: id).count
+    if pscount >= pcount
+      ExamSession.where(exam_id: exam_id).find_by(student_id: student_id).end_session
     end
   end
 end

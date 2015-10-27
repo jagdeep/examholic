@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_account
   before_action :set_current_account
   before_action :set_paper_session
-  helper_method :current_paper
   helper_method :current_paper_session
 
   layout :layout
@@ -25,18 +24,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_paper
-    @current_paper
-  end
-
   def current_paper_session
     @current_paper_session
   end
 
   def set_paper_session
-    if current_student && current_student.current_paper_id
-      @current_paper ||= current_student.current_paper
-      @current_paper_session ||= PaperSession.where(paper_id: @current_paper.id).find_by(student_id: current_student.id)
+    if current_student
+      @current_paper_session ||= PaperSession.where(finished_at: nil).find_by(student_id: current_student.id)
     end
   end
 

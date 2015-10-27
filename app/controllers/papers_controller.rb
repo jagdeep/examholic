@@ -5,6 +5,7 @@ class PapersController < ApplicationController
 
   def index
     @papers = @exam.papers.all
+    @finished_paper_ids = PaperSession.where.not(finished_at: nil).where(exam_id: @exam.id, student_id: current_student.id).pluck(:paper_id)
   end
 
   def show

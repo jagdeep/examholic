@@ -5,9 +5,13 @@
       %tr
         %td
           %h4= paper.name
-          - if current_student.current_paper_id
-            - if current_student.current_paper_id == paper.id
+          - if @finished_paper_ids.include?(paper.id)
+            -# do nothing paper already attempted by this student
+          - elsif current_paper_session
+            - if current_paper_session.paper_id == paper.id
               %cite= link_to 'Resume Paper', new_paper_session_answer_path(current_paper_session)
+            - else
+              -# do nothing another paper session going on
           - elsif @exam.live?
             %cite= link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post
         %td.text-right

@@ -22,10 +22,10 @@
     = render partial: "shared/header"
     .container
       .row
-        - if current_paper
+        - if current_paper_session
           .alert.fade.in.alert-danger
             Please resume and finish your paper
-            = link_to current_student.current_paper, new_paper_session_answer_path(current_paper_session)
+            = link_to current_paper_session.paper, new_paper_session_answer_path(current_paper_session)
         = bootstrap_flash
         = yield
       %br

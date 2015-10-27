@@ -4,28 +4,32 @@
       .panel-title Question .1
     .panel-body= @question.title.html_safe
   %br
-  #answers.list-group
-    - (1..5).each do |i|
-      - if @question["option#{i}"].present?
-        = link_to "#", onclick: "selectOption($(this)); return false", class: 'list-group-item' do
-          %span.fa.fa-square-o
-          &nbsp;
-          = @question["option#{i}"]
+  = form_tag paper_session_answers_path(@paper_session, question_id: @question.id) do
+    = hidden_field_tag :answer
+    #answers.list-group
+      - (1..5).each do |i|
+        - if @question["option#{i}"].present?
+          = link_to "#", class: 'list-group-item' do
+            %span.fa.fa-square-o{data: {answer: "option#{i}"}}
+            &nbsp;
+            = @question["option#{i}"]
 
-  %div
-    .pull-left= link_to "Next Question", "#", class: 'btn btn-primary'
-    .pull-right
-      = link_to "Skip Question", "#", class: 'btn btn-default'
-      = link_to "Quit Paper", "#", class: 'btn btn-danger'
-    .clearfix
+    %div
+      .pull-left= submit_tag "Next Question", class: 'btn btn-primary'
+      .pull-right
+        = submit_tag "Skip Question", class: 'btn btn-default'
+        = submit_tag "Quit Paper", class: 'btn btn-danger'
+      .clearfix
 
 :javascript
-  function selectOption(element){
+  $('#answers.list-group a').click(function(){
+    var element = $(this);
     var checked = $('#answers .fa-check-square-o');
     checked.removeClass('fa-check-square-o');
     checked.addClass('fa-square-o');
-
     element = element.find('span.fa');
     element.removeClass('fa-square-o');
     element.addClass('fa-check-square-o');
-  }
+    $('#answer').val($('#answers .fa-check-square-o').attr('data-answer'));
+    return false;
+  });

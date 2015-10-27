@@ -16,11 +16,11 @@ class ExamSessionsController < ApplicationController
   def create
     @exam = current_student.exams.live.where(id: params[:exam_id]).first
     @paper = @exam.papers.find_by(id: params[:paper_id])
-    @paper_session = PaperSession.where('finished_at = ? OR paper_id = ?', nil, @paper.id).find_by(student_id: current_student.id)
+    @paper_session = PaperSession.where(finished_at: nil).find_by(student_id: current_student.id)
     if @paper_session
       redirect_to :back, alert: 'You can not start this paper as you already have an unfinished paper.'
     else
-      @paper_session = PaperSession.new
+      @paper_session = PaperSession.find_or_initialize_by(paper_id: @paper.id, student_id: current_student.id)
       @paper_session.paper_id = @paper.id
       @paper_session.exam_id = @exam.id
       @paper_session.account_id = @exam.account_id
