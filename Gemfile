@@ -40,7 +40,7 @@ gem 'devise'
 gem 'html2haml'
 gem 'simple_form'
 gem 'country_select'
-gem 'activeadmin', '~> 1.0.0.pre1'
+gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'momentjs-rails'
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 

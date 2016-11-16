@@ -9,7 +9,9 @@ class AccountsController < ApplicationController
   end
 
   def dashboard
-    @accounts = Account.all
+    @accounts= Account.all
+    @exams = Exam.all
+    @papers = Paper.all
   end
 
   # GET /accounts/1

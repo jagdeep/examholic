@@ -10,9 +10,15 @@
   .panel.panel-default
     .panel-heading
       %h3.panel-title Newly Published
-    .panel-body Panel content
+    .panel-body
+      .list-group
+        - @papers.each do |paper|
+          .list-group-item= paper.name
 .col-md-4
   .panel.panel-default
     .panel-heading
       %h3.panel-title Upcoming Exams
-    .panel-body Panel content
+    .panel-body
+      .list-group
+        - @exams.each do |exam|
+          .list-group-item= exam.name
