@@ -17,3 +17,10 @@
     .panel-heading
       %h3.panel-title Upcoming Exams
     .panel-body Panel content
+.row
+  .col-md-8
+    %canvas#myChart
+:javascript
+  $(function(){
+    BarChart(#{@batches.map(&:name).to_json}, #{@batches.map{|batch| batch.students.count}.to_json}, "Batches");
+  });

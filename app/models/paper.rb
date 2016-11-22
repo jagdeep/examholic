@@ -1,8 +1,8 @@
 class Paper < ActiveRecord::Base
-  has_and_belongs_to_many :topics
   has_and_belongs_to_many :batches
   has_and_belongs_to_many :segments
   has_and_belongs_to_many :questions
+  has_many :topics, through: :questions
   belongs_to :account
   belongs_to :exam
 

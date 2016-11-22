@@ -11,7 +11,7 @@
       .col-md-6
         .panel.panel-default
           .panel-heading
-            .pull-left= exam.name
+            .pull-left= link_to exam.name, manage_account_exam_papers_path(@current_account, exam)
             .pull-right
               = link_to edit_manage_account_exam_path(@current_account, exam) do
                 %i.fa.fa-edit
@@ -41,3 +41,10 @@
               .pull-right= link_to exam.papers.count, manage_account_exam_papers_path(@current_account, exam)
               .clearfix
 .clearfix
+.row
+  .col-md-8
+    %canvas#myChart{:style => " width: 50px; height: 20px;"}
+
+:javascript
+  nme = #{@exams.map(&:name).to_json};
+  idx = #{@exams.map{|batch| batch.papers.count}.to_json};

@@ -1,10 +1,11 @@
-%div
-  %h6.text-uppercase.pull-left #{@exam.name} - Papers
-  %p.pull-right
-    = link_to new_manage_account_exam_paper_path(@current_account, @exam), class: "btn btn-default btn-sm" do
-      %i.fa.fa-plus
-      New Paper
-  .clearfix
+.row
+  .col-md-12
+    %h6.text-uppercase.pull-left #{@exam.name} - Papers
+    %p.pull-right
+      = link_to new_manage_account_exam_paper_path(@current_account, @exam), class: "btn btn-default btn-sm" do
+        %i.fa.fa-plus
+        New Paper
+    .clearfix
 - @papers.in_groups_of(2, false) do |paper_group|
   .row
     - paper_group.each do |paper|
@@ -40,4 +41,15 @@
               .pull-left= link_to 'Questions', manage_account_exam_paper_questions_path(@current_account, @exam, paper)
               .pull-right= link_to paper.questions.count, manage_account_exam_paper_questions_path(@current_account, @exam, paper)
               .clearfix
+            %li.list-group-item
+              .row
+                .col-md-8.col-md-offset-2
+                  %canvas{id: "paperPieChart#{paper.id}"}
+                    - topic_ids, topic_names = [], []
+                    - paper.topics.pluck(:name, :id).each{|t| topic_names << t[0]; topic_ids << t[1] }
+                    :javascript
+                      $(function(){
+                        paperPieChart("paperPieChart#{paper.id}", #{topic_names.uniq.to_json}, #{topic_ids.uniq.map{|tid| paper.questions.where(topic_id: tid).count }.to_json});
+                      });
+
 .clearfix
