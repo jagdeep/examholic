@@ -1,8 +1,17 @@
 function paperPieChart(id, labels, data){
   var ctx = document.getElementById(id);
+  var borders = [];
+  var colors = [];
+  for(i=0; i<labels.length; i++){
+    colors.push(dynamicColors());
+    borders.push(dynamicHovers());
+  }
   var data = {
     labels: labels,
-    datasets: [{ data: data, backgroundColor: [ "#FF6384", "#36A2EB", "#FFCE56" ], hoverBackgroundColor: [ "#FF6384", "#36A2EB", "#FFCE56" ]} ],
+    datasets: [{ data: data, 
+      backgroundColor: colors, 
+      hoverBackgroundColor: borders
+    }],
   };
   var myPieChart = new Chart(ctx, {
       type: 'pie',
