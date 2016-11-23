@@ -16,7 +16,8 @@ class Manage::SubjectsController < ApplicationController
 
   def edit
   end
-
+  
+  def create
     @subject = Subject.new(subject_params)
 
     respond_to do |format|
