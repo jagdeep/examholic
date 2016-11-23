@@ -15,7 +15,6 @@ class Manage::AccountsController < ApplicationController
 
   def dashboard
     @accounts = current_teacher.accounts
-    @accounts = current_teacher.accounts
     @batches = Batch.where(:account_id => @current_account.id).all
     @exams = Exam.where(:account_id => @current_account.id).all
   end

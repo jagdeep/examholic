@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'subjects/index'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -18,6 +20,9 @@ Rails.application.routes.draw do
         resources :papers do
           resources :questions
         end
+      end
+      resources :subjects do
+        resources :topics
       end
     end
   end

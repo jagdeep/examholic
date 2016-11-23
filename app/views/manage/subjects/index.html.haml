@@ -1,0 +1,27 @@
+%div
+  %h6.text-uppercase.pull-left Subjects
+  %p.pull-right
+    = link_to new_manage_account_subject_path(@current_account), class: "btn btn-default btn-sm" do
+      %i.fa.fa-plus
+      New Subject
+  .clearfix
+- @subjects.in_groups_of(2, false) do |subject_group|
+  .row
+    - subject_group.each do |subject|
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+            .pull-left= link_to subject.name, manage_account_subject_topics_path(@current_account, subject)
+            .pull-right
+              = link_to edit_manage_account_subject_path(@current_account, subject) do
+                %i.fa.fa-edit
+              &nbsp;
+              = link_to manage_account_subject_path(@current_account, subject), :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                %i.fa.fa-trash-o
+            .clearfix
+          %ul.list-group
+            %li.list-group-item
+              .pull-left= link_to 'Topics', manage_account_subject_topics_path(@current_account, subject)
+              .pull-right= link_to subject.topics.count, manage_account_subject_topics_path(@current_account, subject)
+              .clearfix
+.clearfix

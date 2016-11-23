@@ -9,8 +9,7 @@
           .form-inputs
             = f.input :title, label: 'Question'
             = f.input :topic_id, as: :select, collection: Topic.all
-
-            %br
+      
             %p.input-group
               = f.text_field :option1, :class => "string form-control", :placeholder => "Option 1"
               %span.input-group-addon= check_box :answers, :option1, {checked: (@question.answer || []).include?('option1')}

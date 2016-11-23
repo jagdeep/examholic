@@ -24,6 +24,10 @@
             = link_to manage_account_batches_path(@current_account) do
               %i.fa.fa-users
               Batches
+          %li{:class => ('active' if controller_name == 'subjects' or controller_name == 'topics')}
+            = link_to manage_account_subjects_path(@current_account) do
+              %i.fa.fa-book
+              Subjects
         - if teacher_signed_in?
           %li{:class => ('active' if controller_name == 'accounts' and action_name != 'dashboard')}
             = link_to manage_accounts_path do
