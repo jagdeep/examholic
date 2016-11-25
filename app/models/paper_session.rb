@@ -16,11 +16,12 @@ class PaperSession < ActiveRecord::Base
     es.exam_id = exam_id
     es.account_id = account_id
     es.student_id = student_id
+    es.started_at = Time.zone.now
     es.save!
 
     self.exam_session_id = es.id
   end
-
+  
   def finished?
     finished_at.present?
   end
@@ -35,7 +36,8 @@ class PaperSession < ActiveRecord::Base
   end
 
   def end_session
-    update_attributes(finished_at: Time.zone.now)
+    @time_taken = PaperSession.where(exam_session_id: exam_session_id, student_id: student_id).find_by(paper_id: paper_id)
+    update_attributes(finished_at: Time.zone.now,time_taken: Time.zone.now - @time_taken.started_at)
     pscount = PaperSession.where(exam_session_id: id, student_id: student_id).where('finished_at is not null').count
     pcount = Paper.where(exam_id: id).count
     if pscount >= pcount
