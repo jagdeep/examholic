@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027082613) do
+ActiveRecord::Schema.define(version: 20161125072850) do
 
   create_table "account_teachers", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20151027082613) do
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "email",      limit: 255
-    t.integer  "phone",      limit: 4
+    t.integer  "phone",      limit: 8
     t.string   "address",    limit: 255
     t.integer  "owner_id",   limit: 4
     t.datetime "created_at",             null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151027082613) do
     t.boolean  "correct"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.float    "score",            limit: 24
   end
 
   create_table "batches", force: :cascade do |t|
@@ -152,15 +153,15 @@ ActiveRecord::Schema.define(version: 20151027082613) do
   add_index "paper_sessions", ["exam_id"], name: "index_paper_sessions_on_exam_id", using: :btree
 
   create_table "papers", force: :cascade do |t|
-    t.string   "name",                        limit: 255
+    t.string   "name",                        limit: 255, default: ""
     t.integer  "account_id",                  limit: 4
     t.integer  "exam_id",                     limit: 4
     t.integer  "status",                      limit: 4
     t.integer  "duration",                    limit: 4
     t.float    "marks_per_question",          limit: 24
     t.float    "negative_marks_per_question", limit: 24
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
   end
 
   create_table "papers_questions", id: false, force: :cascade do |t|

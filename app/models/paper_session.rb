@@ -17,6 +17,7 @@ class PaperSession < ActiveRecord::Base
     es.account_id = account_id
     es.student_id = student_id
     es.started_at = Time.zone.now
+    es.score = score
     es.save!
 
     self.exam_session_id = es.id
@@ -35,9 +36,18 @@ class PaperSession < ActiveRecord::Base
     end
   end
 
+  def right
+    return val = Paper.find_by(id: paper_id).marks_per_question
+  end
+
+  def wrong
+    return val = Paper.find_by(id: paper_id).marks_per_question
+  end
+  
   def end_session
     @time_taken = PaperSession.where(exam_session_id: exam_session_id, student_id: student_id).find_by(paper_id: paper_id)
     update_attributes(finished_at: Time.zone.now,time_taken: Time.zone.now - @time_taken.started_at)
+    update_attributes(finished_at: Time.zone.now, score: answers.sum(:score))
     pscount = PaperSession.where(exam_session_id: id, student_id: student_id).where('finished_at is not null').count
     pcount = Paper.where(exam_id: id).count
     if pscount >= pcount

@@ -4,7 +4,7 @@
       .panel-title Question .1
     .panel-body= @question.title.html_safe
   %br
-  = form_tag paper_session_answers_path(@paper_session, question_id: @question.id) do
+  = form_tag paper_session_answers_path(@paper_session, question_id: @question.id, correct_answer: @question.answer.join) do
     = hidden_field_tag :answer
     #answers.list-group
       - (1..5).each do |i|
@@ -13,8 +13,9 @@
             %span.fa.fa-square-o{data: {answer: "option#{i}"}}
             &nbsp;
             = @question["option#{i}"]
+            
 
-    %div
+    %divs
       .pull-left= submit_tag "Next Question", class: 'btn btn-primary'
       .pull-right
         = submit_tag "Skip Question", class: 'btn btn-default'
