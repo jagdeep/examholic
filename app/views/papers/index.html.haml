@@ -6,7 +6,19 @@
         %td
           %h4= paper.name
           - if @finished_paper_ids.include?(paper.id)
-            -# do nothing paper already attempted by this student
+            - @paper_session = PaperSession.find_by(paper_id: paper.id)
+            %td.text-right
+              %h4= @paper_session.score
+              %cite Score
+            %td.text-right
+              %h4= @paper_session.time_taken.to_s + ' seconds'
+              %cite Time Taken
+            %td.text-right
+              %h4= @paper_session.percentage.to_s + ' %'
+              %cite Percentage
+            %td.text-right
+              %h4= @paper_session.max_marks.to_s
+              %cite Maximum Marks
           - elsif current_paper_session
             - if current_paper_session.paper_id == paper.id
               %cite= link_to 'Resume Paper', new_paper_session_answer_path(current_paper_session)
@@ -14,15 +26,16 @@
               -# do nothing another paper session going on
           - elsif @exam.live?
             %cite= link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post
-        %td.text-right
-          %h4= paper.duration.to_s + ' mins'
-          %cite Duration
-        %td.text-right
-          %h4= paper.marks_per_question
-          %cite Marks
-        %td.text-right
-          %h4= paper.negative_marks_per_question
-          %cite -ve Marks
-        %td.text-right
-          %h4= paper.questions.count
-          %cite Questions
+          - if not @finished_paper_ids.include?(paper.id)
+            %td.text-right
+              %h4= paper.duration.to_s + ' mins'
+              %cite Duration
+            %td.text-right
+              %h4= paper.marks_per_question
+              %cite Marks
+            %td.text-right
+              %h4= paper.negative_marks_per_question
+              %cite -ve Marks
+            %td.text-right
+              %h4= paper.questions.count
+              %cite Questions

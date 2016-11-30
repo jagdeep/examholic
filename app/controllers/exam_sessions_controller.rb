@@ -26,6 +26,7 @@ class ExamSessionsController < ApplicationController
       @paper_session.account_id = @exam.account_id
       @paper_session.student_id = current_student.id
       @paper_session.started_at = Time.now
+      @paper_session.score = 0
       if @paper_session.save
         redirect_to new_paper_session_answer_path(@paper_session)
       else
