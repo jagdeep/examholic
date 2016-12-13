@@ -1,12 +1,41 @@
 %h2 Exam - #{@exam.name}
 %table.table.table-condensed
   %tbody
+    - paper_names = []
+    - all_papers_finish = 0
+    - i = 0
     - @papers.each do |paper|
+      - paper_names << paper.name if @finished_paper_ids.include?(paper.id)
+      - i+=1
+      - if i == @papers.count
+        - all_papers_finish = 1
       %tr
         %td
-          %h4= paper.name
+          %h3= paper.name
+          - if not @finished_paper_ids.include?(paper.id)
+            - if current_paper_session
+              - if current_paper_session.paper_id == paper.id
+                %cite= link_to 'Resume Paper', new_paper_session_answer_path(current_paper_session)
+              - else
+              -# do nothing another paper session going on
+            - elsif @exam.live?
+              %cite= link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post
+            - else
+              -# do nothing
+          - @paper_session = PaperSession.where(paper_id: paper.id).find_by(student_id: current_student.id)
+        %td.text-right
+          %h4= paper.duration.to_s + ' mins'
+          %cite Duration
+        %td.text-right
+          %h4= paper.marks_per_question
+          %cite Marks
+        %td.text-right
+          %h4= paper.negative_marks_per_question
+          %cite -ve Marks
+        %td.text-right
+          %h4= paper.questions.count
+          %cite Questions
           - if @finished_paper_ids.include?(paper.id)
-            - @paper_session = PaperSession.find_by(paper_id: paper.id)
             %td.text-right
               %h4= @paper_session.score
               %cite Score
@@ -19,23 +48,56 @@
             %td.text-right
               %h4= @paper_session.max_marks.to_s
               %cite Maximum Marks
-          - elsif current_paper_session
-            - if current_paper_session.paper_id == paper.id
-              %cite= link_to 'Resume Paper', new_paper_session_answer_path(current_paper_session)
-            - else
-              -# do nothing another paper session going on
-          - elsif @exam.live?
-            %cite= link_to 'Begin Paper', exam_paper_exam_sessions_path(@exam, paper), method: :post
-          - if not @finished_paper_ids.include?(paper.id)
+          - else
             %td.text-right
-              %h4= paper.duration.to_s + ' mins'
-              %cite Duration
+              %h4= "-"
+              %cite Score
             %td.text-right
-              %h4= paper.marks_per_question
-              %cite Marks
+              %h4= "-"
+              %cite Time Taken
             %td.text-right
-              %h4= paper.negative_marks_per_question
-              %cite -ve Marks
+              %h4= "-"
+              %cite Percentage
             %td.text-right
-              %h4= paper.questions.count
-              %cite Questions
+              %h4= "-"
+              %cite Maximum Marks
+      - if @finished_paper_ids.count > 0
+        - if @finished_paper_ids.include?(paper.id)
+          %tr
+            - topic_ids, topic_names, ques_id, t_id, correct_topic_id = [], [], [], [], []
+            - hsh = Hash.new 0
+            - ques_id = Answer.where(student_id: current_student.id, correct: 1,paper_session_id: @paper_session.id).pluck(:question_id)
+            - ques_id.each{|q| t_id << Question.where(id: q).pluck(:topic_id)}
+            - t_id.each{|w| hsh[w] +=1}
+            - hsh.each{|k,v| correct_topic_id << v}
+            - paper.topics.pluck(:name, :id).each{|t| topic_names << t[0]; topic_ids << t[1] }
+            %td.text-right.style{width:250}
+              %canvas{id: "barChart#{paper.id}"}
+                :javascript
+                  $(function(){
+                    barChart("barChart#{paper.id}",#{topic_names.uniq.to_json},#{correct_topic_id.to_json}, #{topic_ids.uniq.map{|tid| paper.questions.where(topic_id: tid).count }.to_json},'Correct Ques.', 'Total Ques.');
+                  });
+        - else
+          %tr
+            %td.text-right.style{width:250}
+              = image_tag "NoData.png", :height=>'100', :width=>'250'
+    - if @finished_paper_ids.count > 0
+      - coun =  PaperSession.where(exam_id:@exam.id, student_id: current_student.id).count
+      - if coun == (@papers.count) || (@exam.expired?)
+        %tr
+          .col-xs-3
+            %canvas{id: "mypolar#{@exam.id}"}
+              - scores = []
+              - PaperSession.where(exam_id: @exam.id, student_id: current_student.id).order(:paper_id).pluck(:score).each{|score| scores << score}
+              :javascript
+                $(function(){
+                  polarChart("mypolar#{@exam.id}", #{scores.to_json}, #{paper_names.to_json});
+                });
+          .col-xs-7
+            %canvas{id: "bar#{@exam.id}"}
+              - res = []
+              - PaperSession.where(exam_id: @exam.id).group(:paper_id).average(:score).each{|i| res << i[1]}
+              :javascript
+                $(function(){
+                  barChartPaper("bar#{@exam.id}", #{paper_names.to_json}, #{scores.to_json}, #{res.to_json},'My Score', 'Average Score')
+                });

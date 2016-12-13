@@ -10,8 +10,8 @@ class AccountsController < ApplicationController
 
   def dashboard
     @accounts= Account.all
-    @exams = Exam.all
-    @papers = Paper.all
+    @exams = Exam.last(9)
+    @papers = Paper.last(9)
   end
 
   # GET /accounts/1

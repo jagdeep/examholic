@@ -11,6 +11,7 @@ class Paper < ActiveRecord::Base
   validates :name, :presence => true
   validates :duration, :presence => true
   validates :status, :presence => true
+  validates :negative_marks_per_question, :numericality => { :less_than_or_equal_to => 0 }
 
   def to_s
     name
