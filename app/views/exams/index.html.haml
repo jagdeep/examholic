@@ -2,10 +2,13 @@
 %table.table.table-condensed
   %tbody
     - @exams.each do |exam|
+    - @exam_session = ExamSession.find_by(exam_id: exam.id,student_id: current_student.id)
       %tr
         %td
-          %h4= exam.name
-          - if exam.live?
+          %h4= link_to "#{exam.name}", exam_papers_path(exam)
+          - if @finished_exam_ids.include?(exam.id)
+            %cite= link_to 'View Results', exam_papers_path(exam)
+          - elsif exam.live?
             %cite= link_to 'Begin Exam', exam_papers_path(exam)
         %td.text-right
           %h4= link_to exam.papers.count, exam_papers_path(exam)
@@ -19,6 +22,26 @@
         %td.text-right
           %h4= exam.account.name
           %cite Account
+        - if @exam_session.blank?
+          %td.text-right
+            %h4= "-"
+            %cite Score
+          %td.text-right
+            %h4= "-"
+            %cite Percentage
+          %td.text-right
+            %h4= "-"
+            %cite Maximum Marks
+        - else
+          %td.text-right
+            %h4= @exam_session.score
+            %cite Score
+          %td.text-right
+            %h4= @exam_session.percentage.to_s + "%"
+            %cite Percentage
+          %td.text-right
+            %h4= @exam_session.max_marks
+            %cite Maximum Marks
         - if exam.expired?
           %td.text-right
             %h4= distance_of_time_in_words_to_now(exam.end_time) + ' ago'

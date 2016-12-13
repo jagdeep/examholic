@@ -1,7 +1,7 @@
 .col-md-8.col-md-offset-2
   .panel.panel-default
     .panel-heading
-      .panel-title Question .1
+      .panel-title= "Question #{$c}"
     .panel-body= @question.title.html_safe
   %br
   = form_tag paper_session_answers_path(@paper_session, question_id: @question.id, correct_answer: @question.answer) do
