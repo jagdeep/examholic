@@ -21,7 +21,7 @@
   %tbody
     - @questions.each do |question|
       %tr
-        %td= question.title
+        %td= simple_format(question.title)
         %td= question.topic
         %td
           = link_to 'Edit', edit_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper, question), class: "btn btn-default btn-xs"
