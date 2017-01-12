@@ -37,7 +37,7 @@ function barChart(id, labels, data , data2){
                 yAxes: [{
                   scaleLabel: {
                           display: true,
-                          labelString: 'No. of Topics'
+                          labelString: 'No. of Ques'
                         },
                     ticks: {
                         beginAtZero:true

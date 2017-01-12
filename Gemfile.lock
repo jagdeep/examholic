@@ -263,6 +263,7 @@ DEPENDENCIES
   html2haml
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   less-rails
   momentjs-rails
   mysql2

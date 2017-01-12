@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125072850) do
+ActiveRecord::Schema.define(version: 20161216103856) do
 
   create_table "account_teachers", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20161125072850) do
 
   create_table "exams", force: :cascade do |t|
     t.integer  "account_id", limit: 4
+    t.integer  "batch_id",   limit: 4
     t.string   "name",       limit: 255
     t.integer  "status",     limit: 4
     t.integer  "duration",   limit: 4
@@ -124,7 +125,6 @@ ActiveRecord::Schema.define(version: 20161125072850) do
     t.datetime "end_time"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "batch_id",   limit: 4
   end
 
   add_index "exams", ["batch_id"], name: "index_exams_on_batch_id", using: :btree
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20161125072850) do
 
   create_table "paper_sessions", force: :cascade do |t|
     t.integer  "account_id",      limit: 4
+    t.integer  "exam_id",         limit: 4
     t.integer  "paper_id",        limit: 4
     t.integer  "student_id",      limit: 4
     t.integer  "exam_session_id", limit: 4
@@ -147,21 +148,21 @@ ActiveRecord::Schema.define(version: 20161125072850) do
     t.datetime "finished_at"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "exam_id",         limit: 4
   end
 
   add_index "paper_sessions", ["exam_id"], name: "index_paper_sessions_on_exam_id", using: :btree
 
   create_table "papers", force: :cascade do |t|
-    t.string   "name",                        limit: 255, default: ""
+    t.string   "name",                        limit: 255
     t.integer  "account_id",                  limit: 4
     t.integer  "exam_id",                     limit: 4
     t.integer  "status",                      limit: 4
     t.integer  "duration",                    limit: 4
     t.float    "marks_per_question",          limit: 24
     t.float    "negative_marks_per_question", limit: 24
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "no_of_questions",             limit: 4
   end
 
   create_table "papers_questions", id: false, force: :cascade do |t|
@@ -280,7 +281,6 @@ ActiveRecord::Schema.define(version: 20161125072850) do
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
-  add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true, using: :btree
 
   create_table "topics", force: :cascade do |t|
     t.string   "name",       limit: 255

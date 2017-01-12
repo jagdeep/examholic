@@ -26,7 +26,7 @@ class Manage::PapersController < ApplicationController
     @paper = Paper.new(paper_params)
     @paper.exam = @exam
     @paper.account_id = @exam.account_id
-
+    @paper.duration = @paper.duration*60
     respond_to do |format|
       if @paper.save
         format.html { redirect_to manage_account_exam_papers_path(@current_account, @exam), notice: 'Paper was successfully added.' }
@@ -70,6 +70,6 @@ class Manage::PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:name,:status,:duration,:marks_per_question,:negative_marks_per_question)
+      params.require(:paper).permit(:name,:no_of_questions,:status,:duration,:marks_per_question,:negative_marks_per_question)
     end
 end

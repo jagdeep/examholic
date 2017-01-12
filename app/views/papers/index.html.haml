@@ -24,7 +24,7 @@
               -# do nothing
           - @paper_session = PaperSession.where(paper_id: paper.id).find_by(student_id: current_student.id)
         %td.text-right
-          %h4= paper.duration.to_s + ' mins'
+          %h4= seconds_to_time paper.duration 
           %cite Duration
         %td.text-right
           %h4= paper.marks_per_question
@@ -33,14 +33,14 @@
           %h4= paper.negative_marks_per_question
           %cite -ve Marks
         %td.text-right
-          %h4= paper.questions.count
+          %h4= paper.no_of_questions
           %cite Questions
           - if @finished_paper_ids.include?(paper.id)
             %td.text-right
               %h4= @paper_session.score
               %cite Score
             %td.text-right
-              %h4= @paper_session.time_taken.to_s + ' seconds'
+              %h4= distance_of_time_in_words(@paper_session.time_taken)
               %cite Time Taken
             %td.text-right
               %h4= @paper_session.percentage.to_s + ' %'

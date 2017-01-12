@@ -5,7 +5,7 @@ class ExamsController < ApplicationController
   # GET /exams
   # GET /exams.json
   def index
-    @exams = current_student.exams.all
+    @exams = current_student.exams.page(params[:page])
     @finished_exam_ids = ExamSession.where.not(finished_at: nil).where(student_id: current_student.id).pluck(:exam_id)
   end
 

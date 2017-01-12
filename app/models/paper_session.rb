@@ -10,6 +10,7 @@ class PaperSession < ActiveRecord::Base
   validates :student_id, :presence => true
   validates :paper_id,   :presence => true
   validates :exam_id,   :presence => true
+  
 
   before_create do
     es = ExamSession.where(exam_id: exam_id).find_or_initialize_by(student_id: student_id)
@@ -30,7 +31,7 @@ class PaperSession < ActiveRecord::Base
   def next_question
     ques_ids = answers.pluck(:question_id)
     if ques_ids.present?
-      return questions.where("questions.id not in (?)", ques_ids).first
+      return questions.where("questions.id not in (?)", ques_ids).sample
     else
       return questions.first
     end

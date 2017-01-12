@@ -12,6 +12,8 @@ class Exam < ActiveRecord::Base
   validates :duration, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
+  
+  paginates_per 4
 
   scope :live, ->{ where('start_time <= ? and end_time > ?', Time.zone.now, Time.zone.now) }
 

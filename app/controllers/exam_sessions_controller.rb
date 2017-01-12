@@ -7,6 +7,7 @@ class ExamSessionsController < ApplicationController
   end
 
   def show
+    @exam_sessions = ExamSession.where(exam_id: params[:id]).order('score DESC')
   end
 
   def new
@@ -28,6 +29,7 @@ class ExamSessionsController < ApplicationController
       @paper_session.started_at = Time.now
       @paper_session.score = 0
       if @paper_session.save
+        session[:questions_left] = @paper_session.paper.no_of_questions
         redirect_to new_paper_session_answer_path(@paper_session)
       else
         redirect_to :back, alert: "Error! #{@paper_session.errors.full_messages.join(', ')}"

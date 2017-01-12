@@ -1,0 +1,20 @@
+- i = 0
+%div
+  %h1.text-uppercases Rankings
+%table.table
+  %thead
+    %tr
+      %th Sr. No.
+      %th Name
+      %th Maximum Marks
+      %th Score
+      %th Percentage
+  %tbody
+    - @exam_sessions.each do |exam|
+      - i +=1
+      %tr
+        %td= i
+        %td= exam.student.name
+        %td= exam.max_marks
+        %td= exam.score
+        %td= exam.percentage.to_s + ' %'

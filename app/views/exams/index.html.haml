@@ -8,6 +8,7 @@
           %h4= link_to "#{exam.name}", exam_papers_path(exam)
           - if @finished_exam_ids.include?(exam.id)
             %cite= link_to 'View Results', exam_papers_path(exam)
+            %cite= link_to 'View Rankings', exam_session_path(exam)
           - elsif exam.live?
             %cite= link_to 'Begin Exam', exam_papers_path(exam)
         %td.text-right
