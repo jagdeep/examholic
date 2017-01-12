@@ -32,7 +32,7 @@
           %li{:class => ('active' if controller_name == 'accounts' and action_name != 'dashboard')}
             = link_to manage_accounts_path do
               %i.fa.fa-bars
-              Accounts
+              Institutes
           %li.dropdown
             = link_to "", :class => "dropdown-toggle", :role => "button", "aria-expanded" => false, :data => {:toggle => "dropdown"} do
               = current_teacher.name
